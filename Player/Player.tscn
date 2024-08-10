@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://ckhc8534o4tv1"]
+
+[ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_dvinv"]
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_t0s6d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_02o54"]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8g6hj"]
+atlas = ExtResource("1_dvinv")
+region = Rect2(2.08165e-12, 48, 8, 8)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_t0s6d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_02o54")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -1)
+texture = SubResource("AtlasTexture_8g6hj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
