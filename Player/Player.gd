@@ -25,6 +25,9 @@ var health :int :
 	get:
 		return health
 	set(v):
+		if v == health:
+			return
+			
 		health = clamp(v, 0, health_max)
 		
 		hp_1.set_health(clamp(health, 0, 4))
@@ -52,15 +55,32 @@ var facing_direction := Facing.RIGHT
 var attacking := false
 var damaged := false
 var dashing := false
+var dash_played := false
 @export var dash_count_max := 0
-var dash_count := dash_count_max
+var dash_count := dash_count_max:
+	set(v):
+		if dash_count == v:
+			return
+		dash_count = v
+		if dash_count == 1 and not dash_played:
+			dash_played = true
+			print('play dash ' + str(v))
+			$PlayerAnimations.play("show_dash")
 
 # array of enemies that we already damaged, so we dont do that each tick
 var ignore_enemy_damage := []
-
+var double_jump_played := false
 # max amount if jumps player can make
 @export var jump_count_max := 1
-var jump_count := 1
+var jump_count := 1:
+	set(v):
+		if v == jump_count:
+			return
+		jump_count = v
+		if jump_count == 2 and not double_jump_played:
+			double_jump_played = true
+			$PlayerAnimations.play("show_jump_double")
+			
 
 @export var input_enabled := true
 #@export var enemies: Enemies
@@ -69,8 +89,15 @@ var jump_count := 1
 
 var keys:= 0:
 	set(v):
+		if v == keys:
+			return
+		if v > keys:
+			$PlayerAnimations.play("show_key")
 		keys = max(v, 0)
 		$CanvasLayer/Key.visible = keys > 0
+
+func play_need_key() -> void:
+	$PlayerAnimations.play("show_key_needed")
 
 var weapon_sprite: AnimatedSprite2D:	
 	get:
@@ -84,8 +111,7 @@ func damage(damage: int) -> void:
 		damaged = true
 
 func die () -> void:
-	# todo some animation/particles etc!
-	print('died!')
+	$CanvasLayer/InfoDied.visible = true
 	input_enabled = false
 	$PlayerAnimations.play("died")
 	player_sprite.play("dead")
@@ -93,19 +119,21 @@ func die () -> void:
 	#get_tree().reload_current_scene()
 	
 func respawn() -> void:
+	$PlayerAnimations.play("RESET")
+	$CanvasLayer/InfoDied.visible = false
 	input_enabled = true
 	player_sprite.play("idle")
 	position = respawn_spot.position
 	health = health_max
+	# seems to work
 	get_tree().get_first_node_in_group("enemies").queue_free()
-	#enemies.get_tree().reload_current_scene()
-	#enemies.queue_free()
 	get_tree().root.add_child(enemies_scene.instantiate())
 	
 func _ready() -> void:
 	health = health_start
 	jump_count = jump_count_max
 	keys = 0
+	$CanvasLayer/InfoMove.visible = true
 
 func _process(delta: float) -> void:
 	pass
@@ -137,6 +165,8 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction and input_enabled:
 		velocity.x = direction * speed * air_control_scale
+		if $CanvasLayer/InfoMove.visible:
+			$PlayerAnimations.play("hide_move")
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed * air_control_scale)
 		
@@ -193,6 +223,8 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("attack") and not attacking and not dashing and input_enabled:
 		#print('attack!')
+		if $CanvasLayer/InfoAttack.visible:
+			$PlayerAnimations.play("hide_attack")
 		ignore_enemy_damage.clear()
 		attack_timer.start()
 		attacking = true

@@ -33,7 +33,7 @@ position = Vector2(26, 52)
 respawn_spot = NodePath("../Respawns/RespawnSpot1")
 enemies_scene = ExtResource("3_1154j")
 
-[node name="Enemies" parent="." groups=["enemies"] instance=ExtResource("3_1154j")]
+[node name="Enemies" parent="." instance=ExtResource("3_1154j")]
 
 [node name="HPPickup1" parent="." instance=ExtResource("4_fhs71")]
 position = Vector2(-5, 35)

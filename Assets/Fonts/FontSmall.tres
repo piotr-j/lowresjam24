@@ -3,6 +3,7 @@
 [ext_resource type="FontFile" uid="uid://c7iwfi3vps7dn" path="res://Assets/Fonts/mai10.ttf" id="1_mvhe7"]
 
 [resource]
+line_spacing = -3.0
 font = ExtResource("1_mvhe7")
 font_size = 5
 font_color = Color(0.925353, 0.925353, 0.925353, 1)

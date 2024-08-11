@@ -9,12 +9,13 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if not body is Player:
 		return
 	if body.keys <= 0:
+		body.play_need_key()
 		return
 	body.keys -= 1
 	
 	open()
 	await get_tree().create_timer(2).timeout
-	print ("close!")
+	#print ("close!")
 	#close()
 	
 	

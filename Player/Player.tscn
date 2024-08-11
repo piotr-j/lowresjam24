@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://ckhc8534o4tv1"]
+[gd_scene load_steps=32 format=3 uid="uid://ckhc8534o4tv1"]
 
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_dvinv"]
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_t0s6d"]
 [ext_resource type="PackedScene" uid="uid://b83k0apr5wj8h" path="res://Player/HPIcon.tscn" id="3_x3xnu"]
+[ext_resource type="LabelSettings" uid="uid://dml0yaq3vtm3a" path="res://Assets/Fonts/FontSmall.tres" id="4_ffu6d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_02o54"]
 radius = 3.0
@@ -195,11 +196,217 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_u2uus"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoMove:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/InfoDash:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/InfoAttack:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/InfoDoubleJump:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/InfoKeyGet:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/InfoDied:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CanvasLayer/InfoWin:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CanvasLayer/InfoNeedKey:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_enyd7"]
+resource_name = "show_dash"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoDash:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_6jor1"]
+resource_name = "show_jump_double"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoDoubleJump:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_202km"]
+resource_name = "show_key"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoKeyGet:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ckapr"]
+resource_name = "show_key_needed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoNeedKey:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_pe3u0"]
+resource_name = "hide_move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoMove:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/InfoAttack:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_nculj"]
+resource_name = "hide_attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoAttack:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xbqgy"]
 _data = {
 "RESET": SubResource("Animation_u2uus"),
-"died": SubResource("Animation_0j5eh")
+"died": SubResource("Animation_0j5eh"),
+"hide_attack": SubResource("Animation_nculj"),
+"hide_move": SubResource("Animation_pe3u0"),
+"show_dash": SubResource("Animation_enyd7"),
+"show_jump_double": SubResource("Animation_6jor1"),
+"show_key": SubResource("Animation_202km"),
+"show_key_needed": SubResource("Animation_ckapr")
 }
 
 [node name="Player" type="CharacterBody2D"]
@@ -297,6 +504,78 @@ offset_left = 1.0
 offset_right = 9.0
 offset_bottom = 8.0
 texture = SubResource("AtlasTexture_7kng5")
+
+[node name="InfoMove" type="Label" parent="CanvasLayer"]
+visible = false
+offset_right = 64.0
+offset_bottom = 21.0
+text = "MOVE
+WSAD"
+label_settings = ExtResource("4_ffu6d")
+horizontal_alignment = 1
+
+[node name="InfoDash" type="Label" parent="CanvasLayer"]
+visible = false
+offset_right = 64.0
+offset_bottom = 23.0
+text = "DASH
+SHIFT"
+label_settings = ExtResource("4_ffu6d")
+horizontal_alignment = 1
+
+[node name="InfoAttack" type="Label" parent="CanvasLayer"]
+visible = false
+offset_right = 64.0
+offset_bottom = 23.0
+text = "ATTACK
+CLICK"
+label_settings = ExtResource("4_ffu6d")
+horizontal_alignment = 1
+
+[node name="InfoDoubleJump" type="Label" parent="CanvasLayer"]
+visible = false
+offset_right = 64.0
+offset_bottom = 23.0
+text = "DOUBLE 
+JUMP!"
+label_settings = ExtResource("4_ffu6d")
+horizontal_alignment = 1
+
+[node name="InfoKeyGet" type="Label" parent="CanvasLayer"]
+visible = false
+offset_right = 64.0
+offset_bottom = 23.0
+text = "FOUND
+KEY!"
+label_settings = ExtResource("4_ffu6d")
+horizontal_alignment = 1
+
+[node name="InfoNeedKey" type="Label" parent="CanvasLayer"]
+visible = false
+offset_right = 64.0
+offset_bottom = 23.0
+text = "NEED
+KEY!"
+label_settings = ExtResource("4_ffu6d")
+horizontal_alignment = 1
+
+[node name="InfoDied" type="Label" parent="CanvasLayer"]
+visible = false
+offset_right = 64.0
+offset_bottom = 64.0
+text = "YOU DIED!"
+label_settings = ExtResource("4_ffu6d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoWin" type="Label" parent="CanvasLayer"]
+visible = false
+offset_right = 64.0
+offset_bottom = 64.0
+text = "YOU WON!"
+label_settings = ExtResource("4_ffu6d")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlayerAnimations" type="AnimationPlayer" parent="."]
 libraries = {
