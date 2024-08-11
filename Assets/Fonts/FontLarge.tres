@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dckgfrxipvqd4"]
+
+[ext_resource type="FontFile" uid="uid://c7iwfi3vps7dn" path="res://Assets/Fonts/mai10.ttf" id="1_cn2bt"]
+
+[resource]
+font = ExtResource("1_cn2bt")
+font_size = 10
+font_color = Color(0.925353, 0.925353, 0.925353, 1)
+outline_size = 4
+outline_color = Color(0.0430392, 0.0430392, 0.0430392, 1)
+shadow_size = 0

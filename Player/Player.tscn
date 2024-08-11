@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ckhc8534o4tv1"]
+[gd_scene load_steps=25 format=3 uid="uid://ckhc8534o4tv1"]
 
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_dvinv"]
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_t0s6d"]
@@ -6,6 +6,10 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_02o54"]
 radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mxjt"]
+atlas = ExtResource("1_dvinv")
+region = Rect2(16, 88, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xm1wg"]
 atlas = ExtResource("1_dvinv")
@@ -45,6 +49,14 @@ region = Rect2(16, 48, 8, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_suqgl"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mxjt")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_xm1wg")
@@ -164,6 +176,32 @@ size = Vector2(5, 10)
 atlas = ExtResource("1_dvinv")
 region = Rect2(48, 32, 8, 8)
 
+[sub_resource type="Animation" id="Animation_0j5eh"]
+resource_name = "died"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"respawn"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_u2uus"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xbqgy"]
+_data = {
+"RESET": SubResource("Animation_u2uus"),
+"died": SubResource("Animation_0j5eh")
+}
+
 [node name="Player" type="CharacterBody2D"]
 floor_constant_speed = true
 script = ExtResource("1_t0s6d")
@@ -259,6 +297,11 @@ offset_left = 1.0
 offset_right = 9.0
 offset_bottom = 8.0
 texture = SubResource("AtlasTexture_7kng5")
+
+[node name="PlayerAnimations" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xbqgy")
+}
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="JumpTimer" to="." method="_on_attack_timer_timeout"]

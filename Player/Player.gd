@@ -17,6 +17,8 @@ enum Facing {
 @export var air_control := .5
 @export var dash_speed := 10000.0
 
+@export var respawn_spot: RespawnSpot
+
 @export var health_max := 12
 @export var health_start := 6
 var health :int :
@@ -60,6 +62,11 @@ var ignore_enemy_damage := []
 @export var jump_count_max := 1
 var jump_count := 1
 
+@export var input_enabled := true
+#@export var enemies: Enemies
+
+@export var enemies_scene: PackedScene
+
 var keys:= 0:
 	set(v):
 		keys = max(v, 0)
@@ -73,12 +80,27 @@ var weapon_sprite: AnimatedSprite2D:
 		
 func damage(damage: int) -> void:
 	health -= damage
-	damaged = true
+	if health > 0:
+		damaged = true
 
 func die () -> void:
 	# todo some animation/particles etc!
 	print('died!')
-	get_tree().reload_current_scene()
+	input_enabled = false
+	$PlayerAnimations.play("died")
+	player_sprite.play("dead")
+	# drop key?
+	#get_tree().reload_current_scene()
+	
+func respawn() -> void:
+	input_enabled = true
+	player_sprite.play("idle")
+	position = respawn_spot.position
+	health = health_max
+	get_tree().get_first_node_in_group("enemies").queue_free()
+	#enemies.get_tree().reload_current_scene()
+	#enemies.queue_free()
+	get_tree().root.add_child(enemies_scene.instantiate())
 	
 func _ready() -> void:
 	health = health_start
@@ -104,7 +126,7 @@ func _physics_process(delta: float) -> void:
 		damaged = false
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and jump_count > 0 and velocity.y >= 0:
+	if Input.is_action_just_pressed("jump") and jump_count > 0 and velocity.y >= 0 and input_enabled:
 		jump_count -= 1
 		velocity.y = jump_speed
 		jump_timer.start()
@@ -113,7 +135,7 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("move_left", "move_right")
-	if direction:
+	if direction and input_enabled:
 		velocity.x = direction * speed * air_control_scale
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed * air_control_scale)
@@ -131,7 +153,7 @@ func _physics_process(delta: float) -> void:
 			weapon_sprite_left.visible = true
 			attack_cast.rotation_degrees = 180
 		
-	if Input.is_action_just_pressed("dash") and not dashing and dash_cooldown.time_left <= 0 and dash_count > 0:
+	if Input.is_action_just_pressed("dash") and not dashing and dash_cooldown.time_left <= 0 and dash_count > 0 and input_enabled:
 		dash_timer.start()
 		dash_cooldown.start()
 		weapon_sprite.play("attack_dash")
@@ -152,23 +174,24 @@ func _physics_process(delta: float) -> void:
 	player_sprite.flip_h = facing_direction == Facing.LEFT
 	
 	move_and_slide()
-			
-	if is_on_floor():
-		if velocity.x > 0.1:
-			player_sprite.play("move")
-		elif velocity.x < -0.1:
-			player_sprite.play("move")
+
+	if input_enabled:
+		if is_on_floor():
+			if velocity.x > 0.1:
+				player_sprite.play("move")
+			elif velocity.x < -0.1:
+				player_sprite.play("move")
+			else:
+				player_sprite.play("idle")
+				pass
 		else:
-			player_sprite.play("idle")
-			pass
-	else:
-		if velocity.y < 0:
-			player_sprite.play("jump")
-		else:
-			player_sprite.play("fall")
+			if velocity.y < 0:
+				player_sprite.play("jump")
+			else:
+				player_sprite.play("fall")
 			
 		
-	if Input.is_action_just_pressed("attack") and not attacking and not dashing:
+	if Input.is_action_just_pressed("attack") and not attacking and not dashing and input_enabled:
 		#print('attack!')
 		ignore_enemy_damage.clear()
 		attack_timer.start()
@@ -186,6 +209,7 @@ func attack_front(damage :int) -> void:
 				ignore_enemy_damage.push_back(collider)
 				print('attack: ' + str(collider))
 				collider.damage(attack_damage)
+
 
 func _on_attack_timer_timeout() -> void:
 	attacking = false

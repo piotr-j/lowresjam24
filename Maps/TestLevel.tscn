@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bn01w7gs7tnsc"]
+[gd_scene load_steps=12 format=3 uid="uid://bn01w7gs7tnsc"]
 
 [ext_resource type="TileSet" uid="uid://fm5h4p83byd8" path="res://Assets/tiles.tres" id="1_cefhe"]
 [ext_resource type="PackedScene" uid="uid://ckhc8534o4tv1" path="res://Player/Player.tscn" id="2_tjfek"]
-[ext_resource type="PackedScene" uid="uid://boheg8rb4hiyd" path="res://Enemy/enemy.tscn" id="3_cudv5"]
+[ext_resource type="PackedScene" uid="uid://di872veschuwd" path="res://Enemy/enemies-test.tscn" id="3_1154j"]
 [ext_resource type="PackedScene" uid="uid://c5rotm511andk" path="res://Player/HealthPickup.tscn" id="4_fhs71"]
 [ext_resource type="PackedScene" uid="uid://cbdv3huk8joou" path="res://Player/BootsPickup.tscn" id="5_6g3x2"]
 [ext_resource type="PackedScene" uid="uid://511krqqlkfsq" path="res://Player/DashPickup.tscn" id="6_b1agd"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bqamwbtt7fc3b" path="res://DashWall/dash_wall_right.tscn" id="8_kqupi"]
 [ext_resource type="PackedScene" uid="uid://dkli5n2368ryo" path="res://Player/KeyPickup.tscn" id="9_e86qw"]
 [ext_resource type="PackedScene" uid="uid://gwjsno1onvf8" path="res://Door/locked_door.tscn" id="10_yvou2"]
+[ext_resource type="PackedScene" uid="uid://bkhmith0y4cn4" path="res://Player/respawn_spot.tscn" id="11_wdspr"]
 
 [node name="Root" type="Node2D"]
 
@@ -26,21 +27,13 @@ layer_1/modulate = Color(0.323584, 0.323584, 0.323584, 1)
 layer_1/navigation_enabled = false
 layer_1/tile_data = PackedInt32Array(6619339, 196608, 0, 6684875, 196608, 1, 6750411, 196608, 2, 6619340, 262144, 0, 6684876, 262144, 1, 6750412, 262144, 2, 6619341, 327680, 0, 6684877, 327680, 1, 6750413, 327680, 2, 6619342, 196608, 0, 6684878, 196608, 1, 6750414, 196608, 2, 6619343, 262144, 0, 6684879, 262144, 1, 6750415, 262144, 2, 6619344, 327680, 0, 6684880, 327680, 1, 6750416, 327680, 2)
 
-[node name="Player" parent="." instance=ExtResource("2_tjfek")]
+[node name="Player" parent="." node_paths=PackedStringArray("respawn_spot") instance=ExtResource("2_tjfek")]
 z_index = 2
 position = Vector2(26, 52)
+respawn_spot = NodePath("../Respawns/RespawnSpot1")
+enemies_scene = ExtResource("3_1154j")
 
-[node name="Enemy" parent="." instance=ExtResource("3_cudv5")]
-position = Vector2(66, 61)
-speed = 1.0
-
-[node name="Enemy2" parent="." instance=ExtResource("3_cudv5")]
-position = Vector2(123, 29)
-speed = 1.0
-
-[node name="Enemy3" parent="." instance=ExtResource("3_cudv5")]
-position = Vector2(-27, 77)
-speed = 1.0
+[node name="Enemies" parent="." groups=["enemies"] instance=ExtResource("3_1154j")]
 
 [node name="HPPickup1" parent="." instance=ExtResource("4_fhs71")]
 position = Vector2(-5, 35)
@@ -74,3 +67,11 @@ position = Vector2(139, 60)
 
 [node name="LockedDoor" parent="." instance=ExtResource("10_yvou2")]
 position = Vector2(191, 56)
+
+[node name="Respawns" type="Node" parent="."]
+
+[node name="RespawnSpot1" parent="Respawns" instance=ExtResource("11_wdspr")]
+position = Vector2(4, 59)
+
+[node name="RespawnSpot2" parent="Respawns" instance=ExtResource("11_wdspr")]
+position = Vector2(215, 59)

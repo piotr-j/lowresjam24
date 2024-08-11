@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Enemy
 
-@export var speed := 30.0
+@export var speed := 2
 @export var jump_speed := -120.0
 @export var attack_damage := 2
 

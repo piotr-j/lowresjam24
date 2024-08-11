@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dml0yaq3vtm3a"]
+
+[ext_resource type="FontFile" uid="uid://c7iwfi3vps7dn" path="res://Assets/Fonts/mai10.ttf" id="1_mvhe7"]
+
+[resource]
+font = ExtResource("1_mvhe7")
+font_size = 5
+font_color = Color(0.925353, 0.925353, 0.925353, 1)
+outline_size = 4
+outline_color = Color(0.0430392, 0.0430392, 0.0430392, 1)
+shadow_size = 0
