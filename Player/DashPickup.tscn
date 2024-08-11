@@ -1,18 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5rotm511andk"]
+[gd_scene load_steps=9 format=3 uid="uid://511krqqlkfsq"]
 
-[ext_resource type="Script" path="res://Player/HealthPickup.gd" id="1_yr4yw"]
-[ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_depae"]
+[ext_resource type="Script" path="res://Player/DashPickup.gd" id="1_v2pwl"]
+[ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_0p64t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qkmjc"]
 radius = 4.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jm6y2"]
-atlas = ExtResource("2_depae")
-region = Rect2(80, 88, 8, 8)
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1wve"]
+atlas = ExtResource("2_0p64t")
+region = Rect2(24, 96, 8, 8)
 
-[sub_resource type="Animation" id="Animation_j8c8w"]
-resource_name = "idle"
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_84duf"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -20,10 +19,10 @@ tracks/0/path = NodePath("Sprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -1), Vector2(0, 1), Vector2(0, -1)]
+"values": [Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -80,8 +79,9 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_84duf"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_j8c8w"]
+resource_name = "idle"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -89,10 +89,10 @@ tracks/0/path = NodePath("Sprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, -1), Vector2(0, 1), Vector2(0, -1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -114,14 +114,14 @@ _data = {
 "idle": SubResource("Animation_j8c8w")
 }
 
-[node name="HPPickup" type="Area2D"]
-script = ExtResource("1_yr4yw")
+[node name="DashPickup" type="Area2D"]
+script = ExtResource("1_v2pwl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qkmjc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_jm6y2")
+texture = SubResource("AtlasTexture_b1wve")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

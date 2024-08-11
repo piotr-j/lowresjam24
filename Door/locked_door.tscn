@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://gwjsno1onvf8"]
+
+[ext_resource type="Script" path="res://Door/locked_door.gd" id="1_urbeh"]
+[ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_vpiqt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_akmum"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgi04"]
+atlas = ExtResource("1_vpiqt")
+region = Rect2(88, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gm5sk"]
+atlas = ExtResource("1_vpiqt")
+region = Rect2(104, 48, 8, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pc0cx"]
+atlas = ExtResource("1_vpiqt")
+region = Rect2(112, 48, 8, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iyhql"]
+size = Vector2(26, 16)
+
+[node name="LockedDoor" type="Node2D"]
+position = Vector2(8, -8)
+script = ExtResource("1_urbeh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_akmum")
+
+[node name="SpriteLocked" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_wgi04")
+
+[node name="SpriteOpenLeft" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-4, 0)
+texture = SubResource("AtlasTexture_gm5sk")
+
+[node name="SpriteOpenRight" type="Sprite2D" parent="."]
+visible = false
+z_index = 10
+position = Vector2(4, 0)
+texture = SubResource("AtlasTexture_pc0cx")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_iyhql")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

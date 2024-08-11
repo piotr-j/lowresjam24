@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqamwbtt7fc3b"]
+
+[ext_resource type="PackedScene" uid="uid://gs8hp2b6p7qa" path="res://DashWall/dash_wall_left.tscn" id="1_ke663"]
+[ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_dj3wn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ff6nh"]
+atlas = ExtResource("2_dj3wn")
+region = Rect2(40, 104, 8, 8)
+
+[node name="DashWall" instance=ExtResource("1_ke663")]
+
+[node name="Sprite2D" parent="." index="1"]
+texture = SubResource("AtlasTexture_ff6nh")

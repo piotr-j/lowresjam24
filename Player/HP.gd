@@ -11,7 +11,7 @@ func _ready() -> void:
 	pass
 	
 func set_health(hp: int) -> void:
-	print ('hp: ' + str(hp))
+	#print ('hp: ' + str(hp))
 	
 	if hp <= 0:
 		set_texture(HP_EMPTY)

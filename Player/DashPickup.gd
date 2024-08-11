@@ -1,7 +1,5 @@
 extends Area2D
-class_name PickupHealth
-
-@export var health := 4
+class_name PickupDash
 
 var used := false
 
@@ -11,7 +9,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if used:
 		return
-	if body is Player and body.health < body.health_max:
+	if body is Player:
 		used = true
-		body.health += health
+		body.dash_count_max += 1
 		$AnimationPlayer.play("destroy")

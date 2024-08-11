@@ -29,6 +29,9 @@ var player: Player
 func damage(damage: int) -> void:
 	health -= damage
 	damaged = true
+	# restart attack timer if its running
+	if attack_timer.time_left > 0:
+		attack_timer.start()
 
 func die () -> void:
 	player = null
@@ -51,10 +54,11 @@ func _physics_process(delta: float) -> void:
 	
 	if health >= 0 and player:
 		var direction := player.position - position
-		if direction:
+		# dont hug the player?
+		if direction and direction.length() >= 8.5:
 			velocity.x = direction.x * speed
-		#else:
-			#velocity.x = move_toward(velocity.x, 0, speed)
+		else:
+			velocity.x = 0
 
 	move_and_slide()
 
@@ -62,14 +66,14 @@ func _on_detection_inner_body_entered(body: Node2D) -> void:
 	if not body is Player:
 		return
 	player = body
-	print('Player entered! ' + str(self))
+	#print('Player entered! ' + str(self))
 
 
 func _on_detection_outer_body_exited(body: Node2D) -> void:
 	if not body is Player:
 		return
 	player = null
-	print('Player left! ' + str(self))
+	#print('Player left! ' + str(self))
 
 
 func _on_attack_timer_timeout() -> void:
@@ -77,7 +81,7 @@ func _on_attack_timer_timeout() -> void:
 	for body: Node2D in $DetectionInner.get_overlapping_bodies():
 		if not body is Player:
 			continue
-		print('damage player!')
+		#print('damage player!')
 		body.damage(attack_damage)
 
 
