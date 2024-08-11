@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b83k0apr5wj8h"]
+
+[ext_resource type="Texture2D" uid="uid://b6ihnjbau3wen" path="res://Assets/hp_full.tres" id="1_ecwi2"]
+[ext_resource type="Script" path="res://Player/HP.gd" id="2_5u5dl"]
+
+[node name="HP" type="TextureRect"]
+texture = ExtResource("1_ecwi2")
+stretch_mode = 2
+script = ExtResource("2_5u5dl")
