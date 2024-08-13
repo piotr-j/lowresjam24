@@ -1,5 +1,5 @@
 extends Area2D
-class_name PickupKey
+class_name PickupKeyCls
 
 var used := false
 
@@ -9,7 +9,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if used:
 		return
-	if body is Player:
+	if body is PlayerCls:
 		used = true
 		body.keys += 1
 		$AnimationPlayer.play("destroy")

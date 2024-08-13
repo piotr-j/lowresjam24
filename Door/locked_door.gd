@@ -1,12 +1,12 @@
 extends Node2D
-class_name Door
+class_name DoorCls
 
 var is_open := false
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if is_open:
 		return
-	if not body is Player:
+	if not body is PlayerCls:
 		return
 	if body.keys <= 0:
 		body.play_need_key()

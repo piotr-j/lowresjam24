@@ -5,13 +5,18 @@ extends Node2D
 func _ready() -> void:
 	pass # Replace with function body.
 
-
+var player: PlayerCls
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if player and player.dashing:
+		queue_free()
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body is Player:
-		if body.dashing:
-			queue_free()
+	if body is PlayerCls:
+		player = body
+
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body is PlayerCls:
+		player = null

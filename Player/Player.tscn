@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_dvinv"]
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_t0s6d"]
 [ext_resource type="PackedScene" uid="uid://b83k0apr5wj8h" path="res://Player/HPIcon.tscn" id="3_x3xnu"]
-[ext_resource type="LabelSettings" uid="uid://dml0yaq3vtm3a" path="res://Assets/Fonts/FontSmall.tres" id="4_ffu6d"]
+[ext_resource type="LabelSettings" uid="uid://hvmituqsd26v" path="res://Assets/Fonts/FontSmallRed.tres" id="4_vlji1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_02o54"]
 radius = 3.0
@@ -171,28 +171,11 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xaics"]
-size = Vector2(5, 10)
+size = Vector2(5, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kng5"]
 atlas = ExtResource("1_dvinv")
 region = Rect2(48, 32, 8, 8)
-
-[sub_resource type="Animation" id="Animation_0j5eh"]
-resource_name = "died"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"respawn"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_u2uus"]
 length = 0.001
@@ -293,6 +276,65 @@ tracks/7/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_0j5eh"]
+resource_name = "died"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"respawn"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_nculj"]
+resource_name = "hide_attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoAttack:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_pe3u0"]
+resource_name = "hide_move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/InfoMove:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/InfoAttack:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_enyd7"]
 resource_name = "show_dash"
 length = 3.0
@@ -355,48 +397,6 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_pe3u0"]
-resource_name = "hide_move"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/InfoMove:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/InfoAttack:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_nculj"]
-resource_name = "hide_attack"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/InfoAttack:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xbqgy"]
 _data = {
 "RESET": SubResource("Animation_u2uus"),
@@ -417,13 +417,15 @@ script = ExtResource("1_t0s6d")
 shape = SubResource("CircleShape2D_02o54")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -8)
 position_smoothing_speed = 8.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_left_margin = 0.13
-drag_top_margin = 0.13
+drag_top_margin = 0.26
 drag_right_margin = 0.13
 drag_bottom_margin = 0.13
+editor_draw_drag_margin = true
 
 [node name="PlayerSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -1)
@@ -457,8 +459,11 @@ one_shot = true
 wait_time = 0.3
 one_shot = true
 
+[node name="WasOnFloorTimer" type="Timer" parent="."]
+wait_time = 0.125
+one_shot = true
+
 [node name="AttackCast" type="ShapeCast2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_xaics")
 target_position = Vector2(10, 0)
 collision_mask = 2
@@ -511,7 +516,7 @@ offset_right = 64.0
 offset_bottom = 21.0
 text = "MOVE
 WSAD"
-label_settings = ExtResource("4_ffu6d")
+label_settings = ExtResource("4_vlji1")
 horizontal_alignment = 1
 
 [node name="InfoDash" type="Label" parent="CanvasLayer"]
@@ -520,7 +525,7 @@ offset_right = 64.0
 offset_bottom = 23.0
 text = "DASH
 SHIFT"
-label_settings = ExtResource("4_ffu6d")
+label_settings = ExtResource("4_vlji1")
 horizontal_alignment = 1
 
 [node name="InfoAttack" type="Label" parent="CanvasLayer"]
@@ -529,7 +534,7 @@ offset_right = 64.0
 offset_bottom = 23.0
 text = "ATTACK
 CLICK"
-label_settings = ExtResource("4_ffu6d")
+label_settings = ExtResource("4_vlji1")
 horizontal_alignment = 1
 
 [node name="InfoDoubleJump" type="Label" parent="CanvasLayer"]
@@ -538,7 +543,7 @@ offset_right = 64.0
 offset_bottom = 23.0
 text = "DOUBLE 
 JUMP!"
-label_settings = ExtResource("4_ffu6d")
+label_settings = ExtResource("4_vlji1")
 horizontal_alignment = 1
 
 [node name="InfoKeyGet" type="Label" parent="CanvasLayer"]
@@ -547,7 +552,7 @@ offset_right = 64.0
 offset_bottom = 23.0
 text = "FOUND
 KEY!"
-label_settings = ExtResource("4_ffu6d")
+label_settings = ExtResource("4_vlji1")
 horizontal_alignment = 1
 
 [node name="InfoNeedKey" type="Label" parent="CanvasLayer"]
@@ -556,7 +561,7 @@ offset_right = 64.0
 offset_bottom = 23.0
 text = "NEED
 KEY!"
-label_settings = ExtResource("4_ffu6d")
+label_settings = ExtResource("4_vlji1")
 horizontal_alignment = 1
 
 [node name="InfoDied" type="Label" parent="CanvasLayer"]
@@ -564,7 +569,7 @@ visible = false
 offset_right = 64.0
 offset_bottom = 64.0
 text = "YOU DIED!"
-label_settings = ExtResource("4_ffu6d")
+label_settings = ExtResource("4_vlji1")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -573,7 +578,7 @@ visible = false
 offset_right = 64.0
 offset_bottom = 64.0
 text = "YOU WON!"
-label_settings = ExtResource("4_ffu6d")
+label_settings = ExtResource("4_vlji1")
 horizontal_alignment = 1
 vertical_alignment = 1
 

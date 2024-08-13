@@ -1,5 +1,5 @@
 extends TextureRect
-class_name HPIcon
+class_name HPIconCls
 
 const HP_EMPTY = preload("res://Assets/hp_empty.tres")
 const HP_QUARTER = preload("res://Assets/hp_quarter.tres")

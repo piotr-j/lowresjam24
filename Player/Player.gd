@@ -1,14 +1,14 @@
 extends CharacterBody2D
-class_name Player
+class_name PlayerCls
 
 enum Facing {
 	RIGHT, LEFT
 }
 
 # 12 will do for this :d
-@onready var hp_1: HPIcon = $CanvasLayer/ColorRect/HP1
-@onready var hp_2: HPIcon = $CanvasLayer/ColorRect/HP2
-@onready var hp_3: HPIcon = $CanvasLayer/ColorRect/HP3
+@onready var hp_1: HPIconCls = $CanvasLayer/ColorRect/HP1
+@onready var hp_2: HPIconCls = $CanvasLayer/ColorRect/HP2
+@onready var hp_3: HPIconCls = $CanvasLayer/ColorRect/HP3
 
 @export var speed := 60.0
 @export var jump_speed := -160.0
@@ -17,7 +17,7 @@ enum Facing {
 @export var air_control := .5
 @export var dash_speed := 10000.0
 
-@export var respawn_spot: RespawnSpot
+@export var respawn_spot: RespawnSpotCls
 
 @export var health_max := 12
 @export var health_start := 6
@@ -56,6 +56,7 @@ var attacking := false
 var damaged := false
 var dashing := false
 var dash_played := false
+@export var dash_gravity_scale := .1
 @export var dash_count_max := 0
 var dash_count := dash_count_max:
 	set(v):
@@ -80,12 +81,14 @@ var jump_count := 1:
 		if jump_count == 2 and not double_jump_played:
 			double_jump_played = true
 			$PlayerAnimations.play("show_jump_double")
-			
+
+var jump_id := 0
 
 @export var input_enabled := true
 #@export var enemies: Enemies
 
 @export var enemies_scene: PackedScene
+@export var pickups_scene: PackedScene
 
 var keys:= 0:
 	set(v):
@@ -123,17 +126,31 @@ func respawn() -> void:
 	$CanvasLayer/InfoDied.visible = false
 	input_enabled = true
 	player_sprite.play("idle")
-	position = respawn_spot.position
+	position = respawn_spot.position - Vector2(8, 0)
 	health = health_max
-	# seems to work
-	get_tree().get_first_node_in_group("enemies").queue_free()
-	get_tree().root.add_child(enemies_scene.instantiate())
+	# seems to work-ish
+	var old_enemies: Node = get_tree().get_first_node_in_group("enemies")
+	if old_enemies:
+		for child in old_enemies.get_children():
+			child.restart()
+	var old_pickups: Node = get_tree().get_first_node_in_group("pickups")
+	if old_pickups:
+		for child in old_pickups.get_children():
+			child.restart()
+	#call_deferred("respawn_scenes")
+
+func respawn_scenes() -> void:
+	if enemies_scene:
+		get_tree().root.add_child(enemies_scene.instantiate())
+	if pickups_scene:
+		get_tree().root.add_child(pickups_scene.instantiate())
 	
 func _ready() -> void:
 	health = health_start
 	jump_count = jump_count_max
 	keys = 0
-	$CanvasLayer/InfoMove.visible = true
+	$CanvasLayer/Key.visible = false
+	#$CanvasLayer/InfoMove.visible = true
 
 func _process(delta: float) -> void:
 	pass
@@ -142,23 +159,20 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	var air_control_scale := 1.0
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		if dashing:
+			velocity.y += gravity * delta * dash_gravity_scale
+		else:
+			velocity.y += gravity * delta
 		air_control_scale = air_control
 	else:
-		jump_count = jump_count_max
-		jump_timer.stop()
-		dash_count = dash_count_max
+		jump_reset()
+		$WasOnFloorTimer.start()
 		
 	if damaged:
 		velocity.y += -50
 		damaged = false
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and jump_count > 0 and velocity.y >= 0 and input_enabled:
-		jump_count -= 1
-		velocity.y = jump_speed
-		jump_timer.start()
-	
+	try_jump()
 		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -190,12 +204,11 @@ func _physics_process(delta: float) -> void:
 		ignore_enemy_damage.clear()
 		dashing = true
 		dash_count -= 1
+		velocity.y = 0
 		
 	if dashing:
-		#print('dashing!' + str(dash_timer.time_left))
+		#print('dashing!' + str(velocity.y))
 		attack_front(dash_damage)
-		if velocity.y < 0:
-			velocity.y = 0
 		if facing_direction == Facing.RIGHT:
 			velocity.x = dash_speed * delta
 		else:
@@ -236,12 +249,46 @@ func attack_front(damage :int) -> void:
 	var count := attack_cast.get_collision_count()
 	for i in range(count):
 		var collider := attack_cast.get_collider(i)
-		if collider is Enemy:
+		if collider is EnemyCls:
 			if not ignore_enemy_damage.has(collider):
 				ignore_enemy_damage.push_back(collider)
 				print('attack: ' + str(collider))
 				collider.damage(attack_damage)
-
+	
+func try_jump() -> void:
+	# Handle jump.
+	if not Input.is_action_just_pressed("jump") or not input_enabled:
+		return
+	# no double jump
+	if jump_count_max == 1:
+		if is_on_floor() or was_on_floor():
+			jump_start()
+		return
+		
+	# double jump can be done only from ground, eg not when we are falling without jumping first
+	if jump_id == 0:
+		if not (is_on_floor() or was_on_floor()):
+			jump_count -= 1
+		jump_start()
+	elif jump_count > 0:
+		jump_start()
+		
+			
+func jump_start() -> void:
+	jump_count -= 1
+	velocity.y = jump_speed
+	jump_timer.start()
+	jump_id += 1
+		
+		
+func jump_reset() -> void:
+	jump_count = jump_count_max
+	jump_timer.stop()
+	dash_count = dash_count_max
+	jump_id = 0
+	
+func was_on_floor() -> bool:
+	return $WasOnFloorTimer.time_left > 0
 
 func _on_attack_timer_timeout() -> void:
 	attacking = false

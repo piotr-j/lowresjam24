@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl85dl5a53glf"]
+
+[ext_resource type="Script" path="res://Player/KillPickup.gd" id="1_a87s0"]
+[ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_qiqb8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tp0cl"]
+size = Vector2(8, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulwtb"]
+atlas = ExtResource("2_qiqb8")
+region = Rect2(0, 40, 8, 8)
+
+[node name="Spike" type="Area2D"]
+script = ExtResource("1_a87s0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_tp0cl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_ulwtb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

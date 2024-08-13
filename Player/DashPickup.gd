@@ -1,5 +1,5 @@
 extends Area2D
-class_name PickupDash
+class_name PickupDashCls
 
 var used := false
 
@@ -9,7 +9,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if used:
 		return
-	if body is Player:
+	if body is PlayerCls:
 		used = true
 		body.dash_count_max += 1
 		$AnimationPlayer.play("destroy")

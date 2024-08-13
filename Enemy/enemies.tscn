@@ -1,0 +1,89 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci3q86mn6ivgd"]
+
+[ext_resource type="PackedScene" uid="uid://boheg8rb4hiyd" path="res://Enemy/enemy.tscn" id="1_qmkby"]
+
+[node name="Enemies" type="Node"]
+
+[node name="EnemyTut" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(200, 69)
+health_max = 10
+
+[node name="Enemy1" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-126, -89)
+can_be_interrupted = false
+
+[node name="Enemy4" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(442, 45)
+can_be_interrupted = false
+
+[node name="Enemy2" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(562, -107)
+can_be_interrupted = false
+
+[node name="Enemy3" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(545, -179)
+can_be_interrupted = false
+
+[node name="Enemy5" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(436, -171)
+can_be_interrupted = false
+
+[node name="Enemy6" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(382, -171)
+can_be_interrupted = false
+
+[node name="Enemy7" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-253, 155)
+can_be_interrupted = false
+
+[node name="Enemy8" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-266, 154)
+can_be_interrupted = false
+
+[node name="Enemy9" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-278, 162)
+can_be_interrupted = false
+
+[node name="Enemy10" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-287, 178)
+can_be_interrupted = false
+
+[node name="Enemy11" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-244, 164)
+can_be_interrupted = false
+
+[node name="Enemy12" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-255, 179)
+can_be_interrupted = false
+
+[node name="Enemy13" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-272, 179)
+can_be_interrupted = false
+
+[node name="Enemy14" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-230, 166)
+can_be_interrupted = false
+
+[node name="Enemy15" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-255, 169)
+can_be_interrupted = false
+
+[node name="Enemy16" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-235, 150)
+can_be_interrupted = false
+
+[node name="Enemy17" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-263, 166)
+can_be_interrupted = false
+
+[node name="Enemy18" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-250, 142)
+can_be_interrupted = false
+
+[node name="Enemy19" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-264, 139)
+can_be_interrupted = false
+
+[node name="Enemy20" parent="." instance=ExtResource("1_qmkby")]
+position = Vector2(-279, 141)
+can_be_interrupted = false

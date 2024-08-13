@@ -1,5 +1,5 @@
 extends Node2D
-class_name RespawnSpot
+class_name RespawnSpotCls
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -19,7 +19,7 @@ func toggle(enabled:bool) -> void:
 		animated_sprite_2d.play("off")
 
 func _on_detection_attack_body_entered(body: Node2D) -> void:
-	if not body is Player:
+	if not body is PlayerCls:
 		return
 	
 	body.respawn_spot = self

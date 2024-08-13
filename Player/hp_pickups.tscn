@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://co2cr4mvum4bo"]
+
+[ext_resource type="PackedScene" uid="uid://c5rotm511andk" path="res://Player/HealthPickup.tscn" id="1_7trq0"]
+
+[node name="HPPickups" type="Node"]
+
+[node name="HPPickup1" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-79, -11)
+
+[node name="HPPickup4" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-51, 28)
+
+[node name="HPPickup2" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(267, 84)
+
+[node name="HPPickup3" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(173, 4)
+
+[node name="HPPickup5" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(469, -140)
+
+[node name="HPPickup6" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-41, 194)
+
+[node name="HPPickup7" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-24, 182)
+
+[node name="HPPickup8" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-28, 190)
+
+[node name="HPPickup9" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-52, 185)
+
+[node name="HPPickup10" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-71, 174)
+
+[node name="HPPickup11" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-79, 164)
+
+[node name="HPPickup12" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-94, 164)
+
+[node name="HPPickup13" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-29, 164)
+
+[node name="HPPickup14" parent="." instance=ExtResource("1_7trq0")]
+position = Vector2(-58, 164)
