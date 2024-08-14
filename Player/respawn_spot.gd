@@ -15,6 +15,7 @@ func _process(delta: float) -> void:
 func toggle(enabled:bool) -> void:
 	if enabled:
 		animated_sprite_2d.play("on")
+		$AudioHeal.play()
 	else:
 		animated_sprite_2d.play("off")
 

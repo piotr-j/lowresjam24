@@ -25,6 +25,7 @@ func open() -> void:
 	$SpriteLocked.visible = false
 	$SpriteOpenLeft.visible = true
 	$SpriteOpenRight.visible = true
+	$AudioOpen.play()
 	
 func close() -> void:
 	is_open = false

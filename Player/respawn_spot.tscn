@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkhmith0y4cn4"]
+[gd_scene load_steps=10 format=3 uid="uid://bkhmith0y4cn4"]
 
 [ext_resource type="Script" path="res://Player/respawn_spot.gd" id="1_nk3dd"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_4f3n7"]
+[ext_resource type="AudioStream" uid="uid://b210iic2mcx44" path="res://Assets/Sounds/heal.wav" id="3_rq4aa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2b3cr"]
 size = Vector2(12, 10)
@@ -64,5 +65,9 @@ sprite_frames = SubResource("SpriteFrames_5xpm7")
 animation = &"on"
 autoplay = "off"
 frame_progress = 0.503303
+
+[node name="AudioHeal" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_rq4aa")
+pitch_scale = 2.0
 
 [connection signal="body_entered" from="DetectionAttack" to="." method="_on_detection_attack_body_entered"]

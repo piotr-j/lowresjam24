@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkli5n2368ryo"]
+[gd_scene load_steps=10 format=3 uid="uid://dkli5n2368ryo"]
 
 [ext_resource type="Script" path="res://Player/KeyPickup.gd" id="1_wgylm"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_1yt7o"]
+[ext_resource type="AudioStream" uid="uid://bi4opvj3yfxsc" path="res://Assets/Sounds/key_pickup.wav" id="3_2fei8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qkmjc"]
 radius = 4.0
@@ -128,5 +129,8 @@ libraries = {
 "": SubResource("AnimationLibrary_mxn1k")
 }
 autoplay = "idle"
+
+[node name="AudioKey" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2fei8")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

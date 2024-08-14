@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bn01w7gs7tnsc"]
+[gd_scene load_steps=13 format=3 uid="uid://bn01w7gs7tnsc"]
 
 [ext_resource type="TileSet" uid="uid://fm5h4p83byd8" path="res://Assets/tiles.tres" id="1_cefhe"]
 [ext_resource type="PackedScene" uid="uid://ckhc8534o4tv1" path="res://Player/Player.tscn" id="2_tjfek"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dkli5n2368ryo" path="res://Player/KeyPickup.tscn" id="9_e86qw"]
 [ext_resource type="PackedScene" uid="uid://gwjsno1onvf8" path="res://Door/locked_door.tscn" id="10_yvou2"]
 [ext_resource type="PackedScene" uid="uid://bkhmith0y4cn4" path="res://Player/respawn_spot.tscn" id="11_wdspr"]
+[ext_resource type="PackedScene" uid="uid://c48k3dap38vbs" path="res://win_area.tscn" id="12_68coy"]
 
 [node name="Root" type="Node2D"]
 
@@ -34,6 +35,21 @@ respawn_spot = NodePath("../Respawns/RespawnSpot1")
 enemies_scene = ExtResource("3_1154j")
 
 [node name="Enemies" parent="." instance=ExtResource("3_1154j")]
+
+[node name="Enemy" parent="Enemies" index="0"]
+attack_damage = 1
+
+[node name="Enemy2" parent="Enemies" index="1"]
+attack_damage = 1
+
+[node name="Enemy3" parent="Enemies" index="2"]
+attack_damage = 1
+
+[node name="Enemy4" parent="Enemies" index="3"]
+attack_damage = 1
+
+[node name="Enemy5" parent="Enemies" index="4"]
+attack_damage = 1
 
 [node name="HPPickup1" parent="." instance=ExtResource("4_fhs71")]
 position = Vector2(-5, 35)
@@ -75,3 +91,8 @@ position = Vector2(4, 59)
 
 [node name="RespawnSpot2" parent="Respawns" instance=ExtResource("11_wdspr")]
 position = Vector2(215, 59)
+
+[node name="WinArea" parent="." instance=ExtResource("12_68coy")]
+position = Vector2(84, 52)
+
+[editable path="Enemies"]

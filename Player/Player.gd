@@ -27,7 +27,7 @@ var health :int :
 	set(v):
 		if v == health:
 			return
-			
+		
 		health = clamp(v, 0, health_max)
 		
 		hp_1.set_health(clamp(health, 0, 4))
@@ -112,12 +112,16 @@ func damage(damage: int) -> void:
 	health -= damage
 	if health > 0:
 		damaged = true
+		$Audio/AudioDamage.play()
 
 func die () -> void:
+	if $CanvasLayer/InfoDied.visible:
+		return
 	$CanvasLayer/InfoDied.visible = true
 	input_enabled = false
 	$PlayerAnimations.play("died")
 	player_sprite.play("dead")
+	$Audio/AudioDeath.play()
 	# drop key?
 	#get_tree().reload_current_scene()
 	
@@ -205,6 +209,7 @@ func _physics_process(delta: float) -> void:
 		dashing = true
 		dash_count -= 1
 		velocity.y = 0
+		$Audio/AudioDash.play()
 		
 	if dashing:
 		#print('dashing!' + str(velocity.y))
@@ -241,6 +246,7 @@ func _physics_process(delta: float) -> void:
 		ignore_enemy_damage.clear()
 		attack_timer.start()
 		attacking = true
+		$Audio/AudioAttack.play()
 		weapon_sprite.play("attack")
 		attack_front(attack_damage)
 		
@@ -263,6 +269,7 @@ func try_jump() -> void:
 	if jump_count_max == 1:
 		if is_on_floor() or was_on_floor():
 			jump_start()
+			$Audio/AudioJump.play()
 		return
 		
 	# double jump can be done only from ground, eg not when we are falling without jumping first
@@ -270,8 +277,10 @@ func try_jump() -> void:
 		if not (is_on_floor() or was_on_floor()):
 			jump_count -= 1
 		jump_start()
+		$Audio/AudioJump.play()
 	elif jump_count > 0:
 		jump_start()
+		$Audio/AudioJump2.play()
 		
 			
 func jump_start() -> void:

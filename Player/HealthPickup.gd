@@ -22,3 +22,4 @@ func _on_body_entered(body: Node2D) -> void:
 		used = true
 		body.health += health
 		$AnimationPlayer.play("destroy")
+		$AudioHeal.play()

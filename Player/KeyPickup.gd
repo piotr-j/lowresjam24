@@ -10,6 +10,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if used:
 		return
 	if body is PlayerCls:
+		$AudioKey.play()
 		used = true
 		body.keys += 1
 		$AnimationPlayer.play("destroy")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbdv3huk8joou"]
+[gd_scene load_steps=10 format=3 uid="uid://cbdv3huk8joou"]
 
 [ext_resource type="Script" path="res://Player/BootsPickup.gd" id="1_q1knk"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_glpjn"]
+[ext_resource type="AudioStream" uid="uid://b210iic2mcx44" path="res://Assets/Sounds/heal.wav" id="3_pbmuw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qkmjc"]
 radius = 4.0
@@ -128,5 +129,9 @@ libraries = {
 "": SubResource("AnimationLibrary_mxn1k")
 }
 autoplay = "idle"
+
+[node name="AudioHeal" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_pbmuw")
+pitch_scale = 2.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

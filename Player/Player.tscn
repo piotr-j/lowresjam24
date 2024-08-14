@@ -1,9 +1,14 @@
-[gd_scene load_steps=32 format=3 uid="uid://ckhc8534o4tv1"]
+[gd_scene load_steps=37 format=3 uid="uid://ckhc8534o4tv1"]
 
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_dvinv"]
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_t0s6d"]
 [ext_resource type="PackedScene" uid="uid://b83k0apr5wj8h" path="res://Player/HPIcon.tscn" id="3_x3xnu"]
 [ext_resource type="LabelSettings" uid="uid://hvmituqsd26v" path="res://Assets/Fonts/FontSmallRed.tres" id="4_vlji1"]
+[ext_resource type="AudioStream" uid="uid://bi0xu8yeqwfr3" path="res://Assets/Sounds/dash.wav" id="5_2fkht"]
+[ext_resource type="AudioStream" uid="uid://ckm60r8128x4d" path="res://Assets/Sounds/jump.wav" id="6_tm2j2"]
+[ext_resource type="AudioStream" uid="uid://csdfnlou6tanf" path="res://Assets/Sounds/attack3.wav" id="7_nw00y"]
+[ext_resource type="AudioStream" uid="uid://8vkexfgjngx7" path="res://Assets/Sounds/death.wav" id="8_qb4gq"]
+[ext_resource type="AudioStream" uid="uid://mnhc8j22k6ac" path="res://Assets/Sounds/damage.wav" id="10_n4fi6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_02o54"]
 radius = 3.0
@@ -586,6 +591,42 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_xbqgy")
 }
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="AudioDash" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("5_2fkht")
+volume_db = -7.1
+pitch_scale = 2.0
+
+[node name="AudioJump" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("6_tm2j2")
+pitch_scale = 1.33
+
+[node name="AudioJump2" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("6_tm2j2")
+volume_db = 5.707
+pitch_scale = 1.65
+
+[node name="AudioAttack" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("7_nw00y")
+volume_db = 15.0
+pitch_scale = 1.7
+
+[node name="AudioDeath" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("8_qb4gq")
+volume_db = -7.1
+pitch_scale = 2.0
+
+[node name="AudioDamage" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("10_n4fi6")
+volume_db = 5.657
+pitch_scale = 0.63
+
+[node name="AudioMusic" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("5_2fkht")
+volume_db = -7.1
+pitch_scale = 2.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="JumpTimer" to="." method="_on_attack_timer_timeout"]

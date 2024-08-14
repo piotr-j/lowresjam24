@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c48k3dap38vbs"]
+
+[ext_resource type="Script" path="res://Maps/WinArea.gd" id="1_spr7y"]
+[ext_resource type="AudioStream" uid="uid://gpthw3y5dbnr" path="res://Assets/Sounds/win.wav" id="2_0sfgd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5kgaf"]
+size = Vector2(71, 64)
+
+[node name="WinArea" type="Area2D"]
+position = Vector2(284, -402)
+script = ExtResource("1_spr7y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -6)
+shape = SubResource("RectangleShape2D_5kgaf")
+
+[node name="AudioWin" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-0.5, -6)
+stream = ExtResource("2_0sfgd")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
