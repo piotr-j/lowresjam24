@@ -126,9 +126,11 @@ _data = {
 }
 
 [node name="HPPickup" type="Area2D"]
+collision_mask = 3
 script = ExtResource("1_yr4yw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_qkmjc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

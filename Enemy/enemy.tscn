@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://boheg8rb4hiyd"]
+[gd_scene load_steps=12 format=3 uid="uid://boheg8rb4hiyd"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_5l1rm"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_w4fgn"]
@@ -6,9 +6,51 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_pl80j"]
 radius = 3.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aerp4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukoal"]
+atlas = ExtResource("1_w4fgn")
+region = Rect2(24, 56, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxj0t"]
 atlas = ExtResource("1_w4fgn")
 region = Rect2(0, 56, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gjk0"]
+atlas = ExtResource("1_w4fgn")
+region = Rect2(8, 56, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ho6w"]
+atlas = ExtResource("1_w4fgn")
+region = Rect2(16, 56, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2vhx8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ukoal")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxj0t")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gjk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ho6w")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xxojx"]
 radius = 21.0
@@ -20,24 +62,27 @@ radius = 40.0
 size = Vector2(14, 13)
 
 [node name="Enemy" type="CharacterBody2D"]
-collision_layer = 3
+collision_layer = 4
 script = ExtResource("1_5l1rm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pl80j")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+process_mode = 3
 position = Vector2(0, -1)
-texture = SubResource("AtlasTexture_aerp4")
+sprite_frames = SubResource("SpriteFrames_2vhx8")
+animation = &"idle"
 
 [node name="DetectionInner" type="Area2D" parent="."]
+collision_mask = 3
 
 [node name="CollisionShapeInner" type="CollisionShape2D" parent="DetectionInner"]
 visible = false
 shape = SubResource("CircleShape2D_xxojx")
 
 [node name="DetectionOuter" type="Area2D" parent="."]
+collision_mask = 3
 
 [node name="CollisionShapeOuter" type="CollisionShape2D" parent="DetectionOuter"]
 visible = false
@@ -45,6 +90,7 @@ shape = SubResource("CircleShape2D_drg3h")
 debug_color = Color(0.946025, 0.188105, 0.356576, 0.42)
 
 [node name="DetectionAttack" type="Area2D" parent="."]
+collision_mask = 3
 
 [node name="CollisionShapeAttack" type="CollisionShape2D" parent="DetectionAttack"]
 visible = false
@@ -54,9 +100,32 @@ shape = SubResource("RectangleShape2D_gegee")
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.75
 
-[connection signal="area_entered" from="DetectionInner" to="." method="_on_detection_inner_area_entered"]
+[node name="ParticlesDeadEnemy" type="CPUParticles2D" parent="."]
+process_mode = 3
+position = Vector2(0, 2)
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.32
+direction = Vector2(0, -1)
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+color = Color(0.160784, 0.678431, 1, 1)
+
+[node name="ParticlesDamageEnemy" type="CPUParticles2D" parent="."]
+process_mode = 3
+position = Vector2(0, 2)
+emitting = false
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.32
+direction = Vector2(0, -1)
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+color = Color(0.160784, 0.678431, 1, 1)
+
 [connection signal="body_entered" from="DetectionInner" to="." method="_on_detection_inner_body_entered"]
-[connection signal="area_exited" from="DetectionOuter" to="." method="_on_detection_outer_area_exited"]
 [connection signal="body_exited" from="DetectionOuter" to="." method="_on_detection_outer_body_exited"]
 [connection signal="body_entered" from="DetectionAttack" to="." method="_on_detection_attack_body_entered"]
 [connection signal="body_exited" from="DetectionAttack" to="." method="_on_detection_attack_body_exited"]

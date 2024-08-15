@@ -95,4 +95,28 @@ position = Vector2(215, 59)
 [node name="WinArea" parent="." instance=ExtResource("12_68coy")]
 position = Vector2(84, 52)
 
+[node name="Particles" type="Node" parent="."]
+
+[node name="ParticlesDeadPlayer" type="CPUParticles2D" parent="Particles"]
+position = Vector2(22, 31)
+emitting = false
+amount = 32
+explosiveness = 1.0
+lifetime_randomness = 0.32
+direction = Vector2(0, -1)
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+color = Color(1, 0, 0.301961, 1)
+
+[node name="ParticlesDeadEnemy" type="CPUParticles2D" parent="Particles"]
+position = Vector2(66, 60)
+emitting = false
+amount = 32
+explosiveness = 1.0
+lifetime_randomness = 0.32
+direction = Vector2(0, -1)
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+color = Color(0.160784, 0.678431, 1, 1)
+
 [editable path="Enemies"]

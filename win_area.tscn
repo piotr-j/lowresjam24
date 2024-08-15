@@ -8,6 +8,7 @@ size = Vector2(71, 64)
 
 [node name="WinArea" type="Area2D"]
 position = Vector2(284, -402)
+collision_mask = 3
 script = ExtResource("1_spr7y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

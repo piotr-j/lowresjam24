@@ -55,11 +55,14 @@ animations = [{
 script = ExtResource("1_nk3dd")
 
 [node name="DetectionAttack" type="Area2D" parent="."]
+collision_mask = 3
 
 [node name="CollisionShapeAttack" type="CollisionShape2D" parent="DetectionAttack"]
+visible = false
 shape = SubResource("RectangleShape2D_2b3cr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_5xpm7")
 animation = &"on"
@@ -69,5 +72,19 @@ frame_progress = 0.503303
 [node name="AudioHeal" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_rq4aa")
 pitch_scale = 2.0
+
+[node name="ParticlesSmoke" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 6
+lifetime = 3.0
+lifetime_randomness = 0.32
+emission_shape = 3
+emission_rect_extents = Vector2(2, 1)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+color = Color(0.760784, 0.764706, 0.780392, 1)
 
 [connection signal="body_entered" from="DetectionAttack" to="." method="_on_detection_attack_body_entered"]

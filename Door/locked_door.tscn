@@ -29,6 +29,7 @@ script = ExtResource("1_urbeh")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
 shape = SubResource("RectangleShape2D_akmum")
 
 [node name="SpriteLocked" type="Sprite2D" parent="."]
@@ -46,8 +47,10 @@ position = Vector2(4, 0)
 texture = SubResource("AtlasTexture_pc0cx")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("RectangleShape2D_iyhql")
 
 [node name="AudioOpen" type="AudioStreamPlayer2D" parent="."]

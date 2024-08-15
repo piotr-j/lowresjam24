@@ -32,33 +32,49 @@ var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var player: PlayerCls
 
 func damage(damage: int) -> void:
+	if dead:
+		return
+	#print('damage ' + str(self) + ' ' + str(damage))
 	health -= damage
-	damaged = true
-	# restart attack timer if its running
-	if can_be_interrupted and attack_timer.time_left > 0:
-		attack_timer.start()
+	if health > 0:
+		damaged = true
+		$ParticlesDamageEnemy.emitting = true
+		# restart attack timer if its running$ParticlesDamageEnemy
+		if can_be_interrupted and attack_timer.time_left > 0:
+			attack_timer.start()
 
 func die () -> void:
+	if dead:
+		return
+	#print('die' + str(self))
 	player = null
 	# todo some animation/particles etc!
 	#queue_free()
 	dead = true
-	# todo particles!
-	$Sprite2D.visible = false
-	process_mode = Node.PROCESS_MODE_DISABLED
+	$AnimatedSprite2D.play("dead")
+	$ParticlesDeadEnemy.emitting = true
+	$CollisionShape2D.disabled = true
+	#process_mode = Node.PROCESS_MODE_DISABLED
 
 var start_pos: Vector2
 
 func _ready() -> void:
 	start_pos = position
+	$AnimatedSprite2D.play("idle")
 	
 func restart () -> void:
+	#print('restart' + str(self))
 	position = start_pos
+	#process_mode = Node.PROCESS_MODE_INHERIT
+	call_deferred("do_restart")
+
+func do_restart() -> void:
 	health = health_max
+	damaged = false
 	dead = false
 	player = null
-	$Sprite2D.visible = true
-	process_mode = Node.PROCESS_MODE_INHERIT
+	$AnimatedSprite2D.play("idle")
+	$CollisionShape2D.disabled = false
 	
 func _process(delta: float) -> void:
 	pass
@@ -84,12 +100,19 @@ func _physics_process(delta: float) -> void:
 		# dont hug the player?
 		if direction and direction.length() >= 8.5:
 			velocity.x = direction.x * speed
+			$AnimatedSprite2D.play("move")
+			if velocity.x < 0:
+				$AnimatedSprite2D.flip_h = true
+			else:
+				$AnimatedSprite2D.flip_h = false
 		else:
 			velocity.x = 0
 
 	move_and_slide()
 
 func _on_detection_inner_body_entered(body: Node2D) -> void:
+	if dead:
+		return
 	if not body is PlayerCls:
 		return
 	player = body
@@ -97,6 +120,8 @@ func _on_detection_inner_body_entered(body: Node2D) -> void:
 
 
 func _on_detection_outer_body_exited(body: Node2D) -> void:
+	if dead:
+		return
 	if not body is PlayerCls:
 		return
 	player = null
@@ -104,6 +129,9 @@ func _on_detection_outer_body_exited(body: Node2D) -> void:
 
 
 func _on_attack_timer_timeout() -> void:
+	if dead:
+		attack_timer.stop()
+		return
 	attack_pending = false
 	for body: Node2D in $DetectionAttack.get_overlapping_bodies():
 		if not body is PlayerCls:

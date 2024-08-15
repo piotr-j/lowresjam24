@@ -43,11 +43,11 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var player_sprite: AnimatedSprite2D = $PlayerSprite2D
 @onready var weapon_sprite_right: AnimatedSprite2D = $WeaponSprite2DRight
 @onready var weapon_sprite_left: AnimatedSprite2D = $WeaponSprite2DLeft
-@onready var attack_timer: Timer = $AttackTimer
+@onready var attack_timer: Timer = $Timers/AttackTimer
 @onready var attack_cast: ShapeCast2D = $AttackCast
-@onready var jump_timer: Timer = $JumpTimer
-@onready var dash_timer: Timer = $DashTimer
-@onready var dash_cooldown: Timer = $DashCooldown
+@onready var jump_timer: Timer = $Timers/JumpTimer
+@onready var dash_timer: Timer = $Timers/DashTimer
+@onready var dash_cooldown: Timer = $Timers/DashCooldown
 
 
 var facing_direction := Facing.RIGHT
@@ -113,6 +113,7 @@ func damage(damage: int) -> void:
 	if health > 0:
 		damaged = true
 		$Audio/AudioDamage.play()
+		$Particles/ParticlesDamagePlayer.emitting = true
 
 func die () -> void:
 	if $CanvasLayer/InfoDied.visible:
@@ -122,6 +123,7 @@ func die () -> void:
 	$PlayerAnimations.play("died")
 	player_sprite.play("dead")
 	$Audio/AudioDeath.play()
+	$Particles/ParticlesDeadPlayer.emitting = true
 	# drop key?
 	#get_tree().reload_current_scene()
 	
@@ -170,7 +172,7 @@ func _physics_process(delta: float) -> void:
 		air_control_scale = air_control
 	else:
 		jump_reset()
-		$WasOnFloorTimer.start()
+		$Timers/WasOnFloorTimer.start()
 		
 	if damaged:
 		velocity.y += -50
@@ -195,11 +197,13 @@ func _physics_process(delta: float) -> void:
 			weapon_sprite_right.visible = true
 			weapon_sprite_left.visible = false
 			attack_cast.rotation_degrees = 0
+			$Particles/ParticlesDash.rotation_degrees = 0
 		elif velocity.x < -0.1:
 			facing_direction = Facing.LEFT
 			weapon_sprite_right.visible = false
 			weapon_sprite_left.visible = true
 			attack_cast.rotation_degrees = 180
+			$Particles/ParticlesDash.rotation_degrees = 180
 		
 	if Input.is_action_just_pressed("dash") and not dashing and dash_cooldown.time_left <= 0 and dash_count > 0 and input_enabled:
 		dash_timer.start()
@@ -210,6 +214,7 @@ func _physics_process(delta: float) -> void:
 		dash_count -= 1
 		velocity.y = 0
 		$Audio/AudioDash.play()
+		$Particles/ParticlesDash.emitting = true
 		
 	if dashing:
 		#print('dashing!' + str(velocity.y))
@@ -222,6 +227,8 @@ func _physics_process(delta: float) -> void:
 	player_sprite.flip_h = facing_direction == Facing.LEFT
 	
 	move_and_slide()
+
+	$Particles/ParticlesWalk.emitting = velocity.x > .1 or velocity.x < -.1 and is_on_floor()
 
 	if input_enabled:
 		if is_on_floor():
@@ -250,6 +257,12 @@ func _physics_process(delta: float) -> void:
 		weapon_sprite.play("attack")
 		attack_front(attack_damage)
 		
+	#if Input.is_action_just_pressed("pause"):
+		#if Engine.time_scale > .1:
+			#Engine.time_scale = 0.01
+		#else:
+			#Engine.time_scale = 1.0
+		
 func attack_front(damage :int) -> void:
 	attack_cast.force_shapecast_update()
 	var count := attack_cast.get_collision_count()
@@ -258,7 +271,7 @@ func attack_front(damage :int) -> void:
 		if collider is EnemyCls:
 			if not ignore_enemy_damage.has(collider):
 				ignore_enemy_damage.push_back(collider)
-				print('attack: ' + str(collider))
+				#print('attack: ' + str(collider))
 				collider.damage(attack_damage)
 	
 func try_jump() -> void:
@@ -270,6 +283,7 @@ func try_jump() -> void:
 		if is_on_floor() or was_on_floor():
 			jump_start()
 			$Audio/AudioJump.play()
+			$Particles/ParticlesJump.emitting = true
 		return
 		
 	# double jump can be done only from ground, eg not when we are falling without jumping first
@@ -278,9 +292,11 @@ func try_jump() -> void:
 			jump_count -= 1
 		jump_start()
 		$Audio/AudioJump.play()
+		$Particles/ParticlesJump.emitting = true
 	elif jump_count > 0:
 		jump_start()
 		$Audio/AudioJump2.play()
+		$Particles/ParticlesJump2.emitting = true
 		
 			
 func jump_start() -> void:
@@ -297,7 +313,7 @@ func jump_reset() -> void:
 	jump_id = 0
 	
 func was_on_floor() -> bool:
-	return $WasOnFloorTimer.time_left > 0
+	return $Timers/WasOnFloorTimer.time_left > 0
 
 func _on_attack_timer_timeout() -> void:
 	attacking = false

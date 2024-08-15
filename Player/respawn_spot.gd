@@ -2,6 +2,7 @@ extends Node2D
 class_name RespawnSpotCls
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+var is_enabled := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,6 +14,10 @@ func _process(delta: float) -> void:
 	pass
 
 func toggle(enabled:bool) -> void:
+	if is_enabled == enabled:
+		return
+	is_enabled = enabled
+	$ParticlesSmoke.emitting = enabled
 	if enabled:
 		animated_sprite_2d.play("on")
 		$AudioHeal.play()

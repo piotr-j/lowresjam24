@@ -116,6 +116,7 @@ _data = {
 }
 
 [node name="KeyPickup" type="Area2D"]
+collision_mask = 3
 script = ExtResource("1_wgylm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

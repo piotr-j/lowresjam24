@@ -11,9 +11,11 @@ atlas = ExtResource("2_qiqb8")
 region = Rect2(0, 40, 8, 8)
 
 [node name="Spike" type="Area2D"]
+collision_mask = 7
 script = ExtResource("1_a87s0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_tp0cl")
 

@@ -116,6 +116,7 @@ _data = {
 }
 
 [node name="BootsPickup" type="Area2D"]
+collision_mask = 3
 script = ExtResource("1_q1knk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
