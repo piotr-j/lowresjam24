@@ -1,14 +1,18 @@
 extends CharacterBody2D
 class_name EnemyCls
 
+@export_category("movement")
 @export var speed := 3000
 @export var jump_speed := -120.0
-@export var attack_damage := 2
-@export var can_be_interrupted := true
 @export var can_jump_randomly := true
 @export var jump_chance := .02
 
+@export_category("health")
 @export var health_max := 15
+
+@export_category("attack")
+@export var attack_damage := 2
+@export var can_be_interrupted := true
 
 var attack_pending := false
 var attack_cooldown := false
@@ -31,6 +35,10 @@ var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 	
 var player: PlayerCls
 
+func _ready() -> void:
+	start_pos = position
+	$AnimatedSprite2D.play("idle")
+	
 func damage(damage: int) -> void:
 	if dead:
 		return
@@ -60,9 +68,6 @@ func die () -> void:
 
 var start_pos: Vector2
 
-func _ready() -> void:
-	start_pos = position
-	$AnimatedSprite2D.play("idle")
 	
 func restart () -> void:
 	#print('restart' + str(self))

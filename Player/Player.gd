@@ -12,18 +12,43 @@ enum Facing {
 @onready var hp_1: HPIconCls = $CanvasLayer/ColorRect/HP1
 @onready var hp_2: HPIconCls = $CanvasLayer/ColorRect/HP2
 @onready var hp_3: HPIconCls = $CanvasLayer/ColorRect/HP3
+@onready var camera_rect: ReferenceRect = $Camera2D/CameraRect
 
+@onready var player_sprite: AnimatedSprite2D = $PlayerSprite2D
+@onready var weapon_sprite_right: AnimatedSprite2D = $WeaponSprite2DRight
+@onready var weapon_sprite_left: AnimatedSprite2D = $WeaponSprite2DLeft
+@onready var attack_timer: Timer = $Timers/AttackTimer
+@onready var attack_cast: ShapeCast2D = $AttackCast
+@onready var jump_timer: Timer = $Timers/JumpTimer
+@onready var dash_timer: Timer = $Timers/DashTimer
+@onready var dash_cooldown: Timer = $Timers/DashCooldown
+
+
+@export_category("debug")
+@export var show_camera_rect := false
+
+@export_category("movement")
 @export var speed := 3600.0
 @export var jump_speed := -160.0
-@export var attack_damage := 5
 @export var dash_damage := 8
 @export var air_control := .5
 @export var dash_speed := 10000.0
+@export var dash_gravity_scale := .1
+@export var dash_count_max := 0
+# max amount if jumps player can make
+@export var jump_count_max := 1
 
-@export var respawn_spot: RespawnSpotCls
+@export var input_enabled := true
 
+@export_category("attack")
+@export var attack_damage := 5
+
+@export_category("health")
 @export var health_max := 12
 @export var health_start := 6
+
+
+
 var health :int :
 	get:
 		return health
@@ -40,18 +65,15 @@ var health :int :
 		if health <= 0:
 			die()
 
+
+@export_category("references")
+@export var respawn_spot: RespawnSpotCls
+@export var enemies_scene: PackedScene
+@export var pickups_scene: PackedScene
+
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
-
-@onready var player_sprite: AnimatedSprite2D = $PlayerSprite2D
-@onready var weapon_sprite_right: AnimatedSprite2D = $WeaponSprite2DRight
-@onready var weapon_sprite_left: AnimatedSprite2D = $WeaponSprite2DLeft
-@onready var attack_timer: Timer = $Timers/AttackTimer
-@onready var attack_cast: ShapeCast2D = $AttackCast
-@onready var jump_timer: Timer = $Timers/JumpTimer
-@onready var dash_timer: Timer = $Timers/DashTimer
-@onready var dash_cooldown: Timer = $Timers/DashCooldown
-
 
 var facing_direction := Facing.RIGHT
 
@@ -59,8 +81,6 @@ var attacking := false
 var damaged := false
 var dashing := false
 var dash_played := false
-@export var dash_gravity_scale := .1
-@export var dash_count_max := 0
 var dash_count := dash_count_max:
 	set(v):
 		if dash_count == v:
@@ -74,8 +94,6 @@ var dash_count := dash_count_max:
 # array of enemies that we already damaged, so we dont do that each tick
 var ignore_enemy_damage := []
 var double_jump_played := false
-# max amount if jumps player can make
-@export var jump_count_max := 1
 var jump_count := 1:
 	set(v):
 		if v == jump_count:
@@ -87,11 +105,6 @@ var jump_count := 1:
 
 var jump_id := 0
 
-@export var input_enabled := true
-#@export var enemies: Enemies
-
-@export var enemies_scene: PackedScene
-@export var pickups_scene: PackedScene
 
 var keys:= 0:
 	set(v):
@@ -114,6 +127,12 @@ var aggro_count := 0:
 			aggro_lost.emit()
 		aggro_count = v
 	
+func _ready() -> void:
+	health = health_start
+	jump_count = jump_count_max
+	keys = 0
+	$CanvasLayer/Key.visible = false
+	$Camera2D/CameraRect.visible = show_camera_rect
 
 func play_need_key() -> void:
 	$PlayerAnimations.play("show_key_needed")
@@ -167,13 +186,6 @@ func respawn_scenes() -> void:
 		get_tree().root.add_child(enemies_scene.instantiate())
 	if pickups_scene:
 		get_tree().root.add_child(pickups_scene.instantiate())
-	
-func _ready() -> void:
-	health = health_start
-	jump_count = jump_count_max
-	keys = 0
-	$CanvasLayer/Key.visible = false
-	#$CanvasLayer/InfoMove.visible = true
 
 func _process(delta: float) -> void:
 	pass

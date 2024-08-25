@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://bn01w7gs7tnsc"]
+[gd_scene load_steps=14 format=3 uid="uid://bn01w7gs7tnsc"]
 
 [ext_resource type="TileSet" uid="uid://fm5h4p83byd8" path="res://Assets/tiles.tres" id="1_cefhe"]
+[ext_resource type="Script" path="res://Maps/test_level.gd" id="1_w8kuw"]
 [ext_resource type="PackedScene" uid="uid://ckhc8534o4tv1" path="res://Player/Player.tscn" id="2_tjfek"]
 [ext_resource type="PackedScene" uid="uid://di872veschuwd" path="res://Enemy/enemies-test.tscn" id="3_1154j"]
 [ext_resource type="PackedScene" uid="uid://c5rotm511andk" path="res://Player/HealthPickup.tscn" id="4_fhs71"]
@@ -13,7 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://bkhmith0y4cn4" path="res://Player/respawn_spot.tscn" id="11_wdspr"]
 [ext_resource type="PackedScene" uid="uid://c48k3dap38vbs" path="res://win_area.tscn" id="12_68coy"]
 
-[node name="Root" type="Node2D"]
+[node name="TestLevel" type="Node2D"]
+script = ExtResource("1_w8kuw")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -31,24 +33,25 @@ layer_1/tile_data = PackedInt32Array(6619339, 196608, 0, 6684875, 196608, 1, 675
 [node name="Player" parent="." node_paths=PackedStringArray("respawn_spot") instance=ExtResource("2_tjfek")]
 z_index = 2
 position = Vector2(26, 52)
+show_camera_rect = true
 respawn_spot = NodePath("../Respawns/RespawnSpot1")
 enemies_scene = ExtResource("3_1154j")
 
-[node name="Enemies" parent="." instance=ExtResource("3_1154j")]
+[node name="Enemies" parent="Player" instance=ExtResource("3_1154j")]
 
-[node name="Enemy" parent="Enemies" index="0"]
+[node name="Enemy" parent="Player/Enemies" index="0"]
 attack_damage = 1
 
-[node name="Enemy2" parent="Enemies" index="1"]
+[node name="Enemy2" parent="Player/Enemies" index="1"]
 attack_damage = 1
 
-[node name="Enemy3" parent="Enemies" index="2"]
+[node name="Enemy3" parent="Player/Enemies" index="2"]
 attack_damage = 1
 
-[node name="Enemy4" parent="Enemies" index="3"]
+[node name="Enemy4" parent="Player/Enemies" index="3"]
 attack_damage = 1
 
-[node name="Enemy5" parent="Enemies" index="4"]
+[node name="Enemy5" parent="Player/Enemies" index="4"]
 attack_damage = 1
 
 [node name="HPPickup1" parent="." instance=ExtResource("4_fhs71")]
@@ -119,4 +122,4 @@ initial_velocity_min = 100.0
 initial_velocity_max = 150.0
 color = Color(0.160784, 0.678431, 1, 1)
 
-[editable path="Enemies"]
+[editable path="Player/Enemies"]

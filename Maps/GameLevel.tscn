@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dkli5n2368ryo" path="res://Player/KeyPickup.tscn" id="12_vepua"]
 [ext_resource type="PackedScene" uid="uid://c48k3dap38vbs" path="res://win_area.tscn" id="16_2wv73"]
 
-[node name="Root" type="Node2D"]
+[node name="GameLevel" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -338,108 +338,108 @@ horizontal_alignment = 1
 
 [node name="EnemyTut" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(200, 69)
-attack_damage = 1
 health_max = 10
+attack_damage = 1
 
 [node name="Enemy1" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(274, -67)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy4" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(455, 53)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(562, -107)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy3" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(545, -179)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy5" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(436, -171)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy6" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(382, -171)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy7" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-142, -276)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy8" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-468, -334)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy9" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-278, 162)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy10" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-287, 178)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy11" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-244, 164)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy12" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-255, 179)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy13" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-272, 179)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy14" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-230, 166)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy15" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-381, -142)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy16" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-36, -156)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy17" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-263, 166)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy18" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-340, -237)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy19" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-95, -326)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Enemy20" parent="Enemies" instance=ExtResource("11_pn6s8")]
 position = Vector2(-408, -335)
-can_be_interrupted = false
 health_max = 10
+can_be_interrupted = false
 
 [node name="Doors" type="Node" parent="."]
 
@@ -460,9 +460,9 @@ z_index = 2
 position = Vector2(27, 52)
 air_control = 0.65
 dash_speed = 6500.0
-respawn_spot = NodePath("../Respawns/RespawnSpot1")
-health_start = 8
 dash_gravity_scale = 0.0
+health_start = 8
+respawn_spot = NodePath("../Respawns/RespawnSpot1")
 enemies_scene = ExtResource("11_73oxj")
 pickups_scene = ExtResource("6_55o1a")
 
