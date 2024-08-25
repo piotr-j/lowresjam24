@@ -14,8 +14,8 @@ void fragment() {
 	//COLOR = texture(TEXTURE, UV) * vec4(fract(FRAGCOORD.x*64.0), fract(FRAGCOORD.y*64.0), 0.0, 1.0);
 	//float px = fract((FRAGCOORD.x)/8.0);
 	//float py = fract((FRAGCOORD.y)/8.0);
-	float px = fract((FRAGCOORD.x)/8.0 + camera_offset.x);//SCREEN_PIXEL_SIZE.x * .5;
-	float py = fract((FRAGCOORD.y)/8.0 + camera_offset.y);
+	float px = fract((FRAGCOORD.x)/8.0);//SCREEN_PIXEL_SIZE.x * .5;
+	float py = fract((FRAGCOORD.y)/8.0);
 	//fract(FRAGCOORD.x/8.0 + camera_offset.x), fract(FRAGCOORD.y/8.0 + camera_offset.y)
 	float ss = 8.0/16.0;
 	//float cs = (smoothstep(0.0, ss, px) * smoothstep(0.0, ss, py) * smoothstep(0.0, ss, 1.0 - px) * smoothstep(0.0, ss, 1.0 - py)) * 16.0;
@@ -31,7 +31,6 @@ void fragment() {
 	//COLOR = texture(TEXTURE, UV) * clamp(cs, 0.9, 1.0);
 	
 	
-	//COLOR == texture(TEXTURE, UV) - vec4(vec3(clamp(pow(1.0 - cs, 0.3) - py * 0.1, 0.0, 1.0)), 1.0);
 	COLOR *= vec4(vec3(clamp(pow(1.0 - cs, 0.3) - py * 0.1, 0.0, 1.0)), 1.0);
 	//COLOR = texture(TEXTURE, UV) * vec4(1.0 - smoothstep(0.7, 1.0, px), 1.0 - smoothstep(0.7, 1.0, py), 1.0, 1.0);
 	//COLOR = texture(TEXTURE, UV) * vec4(cs, cs, cs, 1.0);

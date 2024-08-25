@@ -1,11 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbdv3huk8joou"]
+[gd_scene load_steps=12 format=3 uid="uid://cbdv3huk8joou"]
 
 [ext_resource type="Script" path="res://Player/BootsPickup.gd" id="1_q1knk"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_glpjn"]
+[ext_resource type="Shader" path="res://Materials/pixels.gdshader" id="2_iwbhc"]
 [ext_resource type="AudioStream" uid="uid://b210iic2mcx44" path="res://Assets/Sounds/heal.wav" id="3_pbmuw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qkmjc"]
 radius = 4.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xh0qu"]
+shader = ExtResource("2_iwbhc")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hvdr2"]
 atlas = ExtResource("2_glpjn")
@@ -123,6 +127,7 @@ script = ExtResource("1_q1knk")
 shape = SubResource("CircleShape2D_qkmjc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_xh0qu")
 texture = SubResource("AtlasTexture_hvdr2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

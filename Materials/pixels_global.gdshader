@@ -4,19 +4,14 @@ void vertex() {
 	// Called for every vertex the material is visible on.
 }
 
-//uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
-global uniform vec2 camera_position;
-global uniform vec2 camera_offset;
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
 void fragment() {
 	// Called for every pixel the material is visible on.
 	
 	//COLOR = texture(TEXTURE, UV) * vec4(fract(FRAGCOORD.x*64.0), fract(FRAGCOORD.y*64.0), 0.0, 1.0);
-	//float px = fract((FRAGCOORD.x)/8.0);
-	//float py = fract((FRAGCOORD.y)/8.0);
-	float px = fract((FRAGCOORD.x)/8.0 + camera_offset.x);//SCREEN_PIXEL_SIZE.x * .5;
-	float py = fract((FRAGCOORD.y)/8.0 + camera_offset.y);
-	//fract(FRAGCOORD.x/8.0 + camera_offset.x), fract(FRAGCOORD.y/8.0 + camera_offset.y)
+	float px = fract(FRAGCOORD.x/8.0);
+	float py = fract(FRAGCOORD.y/8.0);
 	float ss = 8.0/16.0;
 	//float cs = (smoothstep(0.0, ss, px) * smoothstep(0.0, ss, py) * smoothstep(0.0, ss, 1.0 - px) * smoothstep(0.0, ss, 1.0 - py)) * 16.0;
 	//float cs = px * py * (1.0 - px) * (1.0 - py);
@@ -24,19 +19,11 @@ void fragment() {
 	float cs = smoothstep(0.8, 1.0, px) + smoothstep(0.8, 1.0, 1.0 - px);
 	cs += smoothstep(0.8, 1.0, py) + smoothstep(0.8, 1.0, 1.0 - py);
 	cs /= 4.0;
-	//cs = 1.0 - cs;
 	//float cs = (smoothstep(0.0, ss, px) + smoothstep(0.0, ss, py) + smoothstep(0.0, ss, 1.0 - px) + smoothstep(0.0, ss, 1.0 - py))/4.0;
 	//COLOR = texture(TEXTURE, UV) * vec4(px, py, 0.0, 1.0);
 	//COLOR = texture(TEXTURE, UV) * clamp(cs, 0.9, 1.0);
 	//COLOR = texture(TEXTURE, UV) * clamp(cs, 0.9, 1.0);
-	
-	
-	//COLOR == texture(TEXTURE, UV) - vec4(vec3(clamp(pow(1.0 - cs, 0.3) - py * 0.1, 0.0, 1.0)), 1.0);
-	COLOR *= vec4(vec3(clamp(pow(1.0 - cs, 0.3) - py * 0.1, 0.0, 1.0)), 1.0);
-	//COLOR = texture(TEXTURE, UV) * vec4(1.0 - smoothstep(0.7, 1.0, px), 1.0 - smoothstep(0.7, 1.0, py), 1.0, 1.0);
-	//COLOR = texture(TEXTURE, UV) * vec4(cs, cs, cs, 1.0);
-	
-	
+	COLOR = texture(screen_texture, SCREEN_UV) * vec4(vec3(clamp(pow(1.0 - cs, 0.3) - py * 0.1, 0.0, 1.0)), 1.0);
 	//COLOR = vec4(vec3(smoothstep(0.0, 1.0, 1.0 - py))/8.0, 1.0);
 	//COLOR = vec4(vec3(py) * .2, 1.0);
 	//COLOR = texture(TEXTURE, UV) * vec4(POINT_COORD.x, POINT_COORD.y, 0.0, 1.0);

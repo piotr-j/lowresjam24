@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="LowRes24"
-run/main_scene="res://Maps/game_level_large.tscn"
+run/main_scene="res://Maps/GameLevel.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/image="res://Assets/logo_vertical_color_dark.png"
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [audio]
@@ -25,12 +27,11 @@ gdscript/warnings/untyped_declaration=2
 
 [display]
 
-window/size/viewport_width=1024
-window/size/viewport_height=1024
+window/size/viewport_width=512
+window/size/viewport_height=512
 window/size/window_width_override=1024
 window/size/window_height_override=1024
 window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
 
 [input]
 
@@ -85,3 +86,15 @@ pause={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+2d/snap/snap_2d_transforms_to_pixel=true
+
+[shader_globals]
+
+camera_position={
+"type": "vec2",
+"value": Vector2(0, 0)
+}
+camera_offset={
+"type": "vec2",
+"value": Vector2(0, 0)
+}

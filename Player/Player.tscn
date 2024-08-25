@@ -1,12 +1,15 @@
-[gd_scene load_steps=46 format=3 uid="uid://ckhc8534o4tv1"]
+[gd_scene load_steps=54 format=3 uid="uid://ckhc8534o4tv1"]
 
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_dvinv"]
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_t0s6d"]
 [ext_resource type="Script" path="res://Player/camera.gd" id="2_71uuk"]
+[ext_resource type="Material" uid="uid://cgoo50anj7fgr" path="res://Materials/pixels_mat.tres" id="3_i3w4p"]
 [ext_resource type="PackedScene" uid="uid://b83k0apr5wj8h" path="res://Player/HPIcon.tscn" id="3_x3xnu"]
 [ext_resource type="LabelSettings" uid="uid://hvmituqsd26v" path="res://Assets/Fonts/FontSmallRed.tres" id="4_vlji1"]
 [ext_resource type="AudioStream" uid="uid://bi0xu8yeqwfr3" path="res://Assets/Sounds/dash.wav" id="5_2fkht"]
 [ext_resource type="Script" path="res://Player/player_music.gd" id="5_56bki"]
+[ext_resource type="Shader" path="res://Materials/pixels_text.gdshader" id="5_nvdfc"]
+[ext_resource type="Shader" path="res://Materials/pixels_static.gdshader" id="5_rsby0"]
 [ext_resource type="AudioStream" uid="uid://ckm60r8128x4d" path="res://Assets/Sounds/jump.wav" id="6_tm2j2"]
 [ext_resource type="AudioStream" uid="uid://csdfnlou6tanf" path="res://Assets/Sounds/attack3.wav" id="7_nw00y"]
 [ext_resource type="AudioStream" uid="uid://8vkexfgjngx7" path="res://Assets/Sounds/death.wav" id="8_qb4gq"]
@@ -14,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://cg4k1ypixfhhg" path="res://Assets/Music/adventure_quest.mp3" id="12_okndm"]
 [ext_resource type="AudioStream" uid="uid://c5f5qomnhwoda" path="res://Assets/Music/outro_song.mp3" id="13_dx4ps"]
 [ext_resource type="AudioStream" uid="uid://b52t73kathqeo" path="res://Assets/Music/battle_song.mp3" id="14_ip41g"]
+[ext_resource type="Shader" path="res://Materials/pixels_particle.gdshader" id="16_rhmnv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_02o54"]
 radius = 3.0
@@ -183,6 +187,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xaics"]
 size = Vector2(5, 12)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y3kr0"]
+shader = ExtResource("5_rsby0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_st4ha"]
+shader = ExtResource("5_nvdfc")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kng5"]
 atlas = ExtResource("1_dvinv")
 region = Rect2(48, 32, 8, 8)
@@ -192,7 +202,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/InfoMove:visible")
+tracks/0/path = NodePath("CanvasLayer/InfoKeyGet:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -204,7 +214,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/InfoDash:visible")
+tracks/1/path = NodePath("CanvasLayer/InfoDied:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -216,7 +226,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer/InfoAttack:visible")
+tracks/2/path = NodePath("CanvasLayer/InfoWin:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -228,58 +238,10 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CanvasLayer/InfoDoubleJump:visible")
+tracks/3/path = NodePath("CanvasLayer/InfoNeedKey:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CanvasLayer/InfoKeyGet:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("CanvasLayer/InfoDied:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("CanvasLayer/InfoWin:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("CanvasLayer/InfoNeedKey:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -305,77 +267,17 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_nculj"]
 resource_name = "hide_attack"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/InfoAttack:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_pe3u0"]
 resource_name = "hide_move"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/InfoMove:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/InfoAttack:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_enyd7"]
 resource_name = "show_dash"
 length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/InfoDash:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="Animation" id="Animation_6jor1"]
 resource_name = "show_jump_double"
 length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/InfoDoubleJump:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="Animation" id="Animation_202km"]
 resource_name = "show_key"
@@ -582,6 +484,12 @@ _data = {
 "play_base_music": SubResource("Animation_vr2sr")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7plxs"]
+shader = ExtResource("16_rhmnv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dxgaa"]
+shader = ExtResource("16_rhmnv")
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
@@ -622,16 +530,19 @@ editor_only = false
 
 [node name="PlayerSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
+material = ExtResource("3_i3w4p")
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_suqgl")
 animation = &"idle"
 
 [node name="WeaponSprite2DRight" type="AnimatedSprite2D" parent="."]
+material = ExtResource("3_i3w4p")
 position = Vector2(6, -1)
 sprite_frames = SubResource("SpriteFrames_us2tv")
 animation = &"empty"
 
 [node name="WeaponSprite2DLeft" type="AnimatedSprite2D" parent="."]
+material = ExtResource("3_i3w4p")
 position = Vector2(-6, -1)
 sprite_frames = SubResource("SpriteFrames_us2tv")
 animation = &"empty"
@@ -645,31 +556,38 @@ collision_mask = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
+scale = Vector2(8, 8)
+transform = Transform2D(8, 0, 0, 8, 0, 0)
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_y3kr0")
 offset_right = 28.0
 offset_bottom = 8.0
 color = Color(1, 0, 0.301961, 0.0980392)
 
 [node name="HP1" parent="CanvasLayer/ColorRect" instance=ExtResource("3_x3xnu")]
+use_parent_material = true
 layout_mode = 2
 offset_left = 1.0
 offset_right = 9.0
 offset_bottom = 8.0
 
 [node name="HP2" parent="CanvasLayer/ColorRect" instance=ExtResource("3_x3xnu")]
+use_parent_material = true
 layout_mode = 2
 offset_left = 10.0
 offset_right = 18.0
 offset_bottom = 8.0
 
 [node name="HP3" parent="CanvasLayer/ColorRect" instance=ExtResource("3_x3xnu")]
+use_parent_material = true
 layout_mode = 2
 offset_left = 19.0
 offset_right = 27.0
 offset_bottom = 8.0
 
 [node name="Key" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_st4ha")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -679,50 +597,16 @@ grow_horizontal = 0
 color = Color(1, 0.639216, 0, 0.192157)
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Key"]
+use_parent_material = true
 layout_mode = 1
 offset_left = 1.0
 offset_right = 9.0
 offset_bottom = 8.0
 texture = SubResource("AtlasTexture_7kng5")
 
-[node name="InfoMove" type="Label" parent="CanvasLayer"]
-visible = false
-offset_right = 64.0
-offset_bottom = 21.0
-text = "MOVE
-WSAD"
-label_settings = ExtResource("4_vlji1")
-horizontal_alignment = 1
-
-[node name="InfoDash" type="Label" parent="CanvasLayer"]
-visible = false
-offset_right = 64.0
-offset_bottom = 23.0
-text = "DASH
-SHIFT"
-label_settings = ExtResource("4_vlji1")
-horizontal_alignment = 1
-
-[node name="InfoAttack" type="Label" parent="CanvasLayer"]
-visible = false
-offset_right = 64.0
-offset_bottom = 23.0
-text = "ATTACK
-CLICK"
-label_settings = ExtResource("4_vlji1")
-horizontal_alignment = 1
-
-[node name="InfoDoubleJump" type="Label" parent="CanvasLayer"]
-visible = false
-offset_right = 64.0
-offset_bottom = 23.0
-text = "DOUBLE 
-JUMP!"
-label_settings = ExtResource("4_vlji1")
-horizontal_alignment = 1
-
 [node name="InfoKeyGet" type="Label" parent="CanvasLayer"]
 visible = false
+material = SubResource("ShaderMaterial_st4ha")
 offset_right = 64.0
 offset_bottom = 23.0
 text = "FOUND
@@ -732,6 +616,7 @@ horizontal_alignment = 1
 
 [node name="InfoNeedKey" type="Label" parent="CanvasLayer"]
 visible = false
+material = SubResource("ShaderMaterial_st4ha")
 offset_right = 64.0
 offset_bottom = 23.0
 text = "NEED
@@ -741,6 +626,7 @@ horizontal_alignment = 1
 
 [node name="InfoDied" type="Label" parent="CanvasLayer"]
 visible = false
+material = SubResource("ShaderMaterial_st4ha")
 offset_right = 64.0
 offset_bottom = 64.0
 text = "YOU DIED!"
@@ -750,6 +636,7 @@ vertical_alignment = 1
 
 [node name="InfoWin" type="Label" parent="CanvasLayer"]
 visible = false
+material = SubResource("ShaderMaterial_st4ha")
 offset_right = 64.0
 offset_bottom = 64.0
 text = "YOU WON!"
@@ -849,6 +736,7 @@ libraries = {
 [node name="Particles" type="Node2D" parent="."]
 
 [node name="ParticlesDeadPlayer" type="CPUParticles2D" parent="Particles"]
+material = SubResource("ShaderMaterial_7plxs")
 emitting = false
 amount = 32
 one_shot = true
@@ -861,6 +749,7 @@ color = Color(1, 0, 0.301961, 1)
 
 [node name="ParticlesJump" type="CPUParticles2D" parent="Particles"]
 z_index = -1
+material = SubResource("ShaderMaterial_dxgaa")
 position = Vector2(0, 3)
 emitting = false
 amount = 6
@@ -879,6 +768,7 @@ color = Color(1, 0.639216, 0, 1)
 
 [node name="ParticlesWalk" type="CPUParticles2D" parent="Particles"]
 z_index = -1
+material = SubResource("ShaderMaterial_dxgaa")
 position = Vector2(0, 3)
 emitting = false
 amount = 1
@@ -896,6 +786,7 @@ color = Color(1, 0.639216, 0, 1)
 
 [node name="ParticlesJump2" type="CPUParticles2D" parent="Particles"]
 z_index = -1
+material = SubResource("ShaderMaterial_dxgaa")
 position = Vector2(0, 3)
 emitting = false
 amount = 12
@@ -914,6 +805,7 @@ color = Color(0.513726, 0.462745, 0.611765, 1)
 
 [node name="ParticlesDash" type="CPUParticles2D" parent="Particles"]
 z_index = -1
+material = SubResource("ShaderMaterial_dxgaa")
 emitting = false
 amount = 32
 lifetime = 0.1
@@ -930,6 +822,7 @@ initial_velocity_max = 150.0
 color = Color(0.513726, 0.462745, 0.611765, 1)
 
 [node name="ParticlesDamagePlayer" type="CPUParticles2D" parent="Particles"]
+material = SubResource("ShaderMaterial_dxgaa")
 emitting = false
 one_shot = true
 explosiveness = 1.0

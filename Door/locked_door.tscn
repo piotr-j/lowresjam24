@@ -1,11 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://gwjsno1onvf8"]
+[gd_scene load_steps=11 format=3 uid="uid://gwjsno1onvf8"]
 
 [ext_resource type="Script" path="res://Door/locked_door.gd" id="1_urbeh"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_vpiqt"]
+[ext_resource type="Shader" path="res://Materials/pixels.gdshader" id="2_d3sob"]
 [ext_resource type="AudioStream" uid="uid://p1fnjbdnvc84" path="res://Assets/Sounds/door_open.wav" id="3_8i02l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_akmum"]
 size = Vector2(16, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_35t58"]
+shader = ExtResource("2_d3sob")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wgi04"]
 atlas = ExtResource("1_vpiqt")
@@ -33,16 +37,19 @@ visible = false
 shape = SubResource("RectangleShape2D_akmum")
 
 [node name="SpriteLocked" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_35t58")
 texture = SubResource("AtlasTexture_wgi04")
 
 [node name="SpriteOpenLeft" type="Sprite2D" parent="."]
 visible = false
+material = SubResource("ShaderMaterial_35t58")
 position = Vector2(-4, 0)
 texture = SubResource("AtlasTexture_gm5sk")
 
 [node name="SpriteOpenRight" type="Sprite2D" parent="."]
 visible = false
 z_index = 10
+material = SubResource("ShaderMaterial_35t58")
 position = Vector2(4, 0)
 texture = SubResource("AtlasTexture_pc0cx")
 

@@ -1,10 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://gs8hp2b6p7qa"]
+[gd_scene load_steps=11 format=3 uid="uid://gs8hp2b6p7qa"]
 
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_3bwjx"]
 [ext_resource type="Script" path="res://DashWall/dash_wall.gd" id="1_8k43u"]
+[ext_resource type="Shader" path="res://Materials/pixels.gdshader" id="2_2i3sl"]
+[ext_resource type="Shader" path="res://Materials/pixels_particle.gdshader" id="4_sngjq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lnprp"]
 size = Vector2(8, 8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6cqcm"]
+shader = ExtResource("2_2i3sl")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hlxo0"]
 atlas = ExtResource("1_3bwjx")
@@ -12,6 +17,9 @@ region = Rect2(48, 104, 8, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_opmpu"]
 size = Vector2(16, 8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cn6be"]
+shader = ExtResource("4_sngjq")
 
 [sub_resource type="Gradient" id="Gradient_u4n57"]
 interpolation_mode = 1
@@ -29,6 +37,7 @@ position = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_lnprp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6cqcm")
 position = Vector2(4, 4)
 texture = SubResource("AtlasTexture_hlxo0")
 
@@ -42,6 +51,7 @@ position = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_opmpu")
 
 [node name="ParticlesExplodes" type="CPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_cn6be")
 position = Vector2(4, 4)
 emitting = false
 amount = 32

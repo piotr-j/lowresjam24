@@ -27,6 +27,9 @@ enum Facing {
 @export_category("debug")
 @export var show_camera_rect := false
 
+@export_category("camera")
+@export var camera_zoom := 1.0
+
 @export_category("movement")
 @export var speed := 3600.0
 @export var jump_speed := -160.0
@@ -133,6 +136,8 @@ func _ready() -> void:
 	keys = 0
 	$CanvasLayer/Key.visible = false
 	$Camera2D/CameraRect.visible = show_camera_rect
+	
+	$Camera2D.zoom = Vector2(camera_zoom, camera_zoom)
 
 func play_need_key() -> void:
 	$PlayerAnimations.play("show_key_needed")
@@ -264,8 +269,6 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("attack") and not attacking and not dashing and input_enabled:
 		#print('attack!')
-		if $CanvasLayer/InfoAttack.visible:
-			$PlayerAnimations.play("hide_attack")
 		ignore_enemy_damage.clear()
 		attack_timer.start()
 		attacking = true

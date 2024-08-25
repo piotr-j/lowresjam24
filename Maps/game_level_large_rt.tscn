@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmd7v61exo5vd"]
+
+[ext_resource type="Shader" path="res://Materials/pixels.gdshader" id="1_hlknk"]
+[ext_resource type="PackedScene" uid="uid://g2ai10kkd1do" path="res://Maps/GameLevel.tscn" id="2_6p6dy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjv1p"]
+shader = ExtResource("1_hlknk")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_atw5v"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Root" type="Node"]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+canvas_item_default_texture_filter = 0
+audio_listener_enable_2d = true
+size = Vector2i(64, 64)
+render_target_update_mode = 4
+
+[node name="GameLevel" parent="SubViewport" instance=ExtResource("2_6p6dy")]
+
+[node name="Player" parent="SubViewport/GameLevel" index="9"]
+camera_zoom = 1.0
+
+[node name="ViewportRender" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_cjv1p")
+position = Vector2(256, 256)
+scale = Vector2(8, 8)
+texture = SubResource("ViewportTexture_atw5v")
+
+[editable path="SubViewport/GameLevel"]

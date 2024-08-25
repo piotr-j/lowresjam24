@@ -31,10 +31,10 @@ void fragment() {
 	//COLOR = texture(TEXTURE, UV) * clamp(cs, 0.9, 1.0);
 	
 	
-	//COLOR == texture(TEXTURE, UV) - vec4(vec3(clamp(pow(1.0 - cs, 0.3) - py * 0.1, 0.0, 1.0)), 1.0);
 	COLOR *= vec4(vec3(clamp(pow(1.0 - cs, 0.3) - py * 0.1, 0.0, 1.0)), 1.0);
 	//COLOR = texture(TEXTURE, UV) * vec4(1.0 - smoothstep(0.7, 1.0, px), 1.0 - smoothstep(0.7, 1.0, py), 1.0, 1.0);
 	//COLOR = texture(TEXTURE, UV) * vec4(cs, cs, cs, 1.0);
+	//COLOR = 
 	
 	
 	//COLOR = vec4(vec3(smoothstep(0.0, 1.0, 1.0 - py))/8.0, 1.0);

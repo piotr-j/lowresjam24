@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bkhmith0y4cn4"]
+[gd_scene load_steps=13 format=3 uid="uid://bkhmith0y4cn4"]
 
 [ext_resource type="Script" path="res://Player/respawn_spot.gd" id="1_nk3dd"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_4f3n7"]
+[ext_resource type="Material" uid="uid://cgoo50anj7fgr" path="res://Materials/pixels_mat.tres" id="2_5bu1w"]
 [ext_resource type="AudioStream" uid="uid://b210iic2mcx44" path="res://Assets/Sounds/heal.wav" id="3_rq4aa"]
+[ext_resource type="Shader" path="res://Materials/pixels_particle.gdshader" id="5_ggl5e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2b3cr"]
 size = Vector2(12, 10)
@@ -51,6 +53,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ugkdm"]
+shader = ExtResource("5_ggl5e")
+
 [node name="RespawnSpot" type="Node2D"]
 script = ExtResource("1_nk3dd")
 
@@ -63,6 +68,7 @@ shape = SubResource("RectangleShape2D_2b3cr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
+material = ExtResource("2_5bu1w")
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_5xpm7")
 animation = &"on"
@@ -75,7 +81,7 @@ pitch_scale = 2.0
 bus = &"VFX"
 
 [node name="ParticlesSmoke" type="CPUParticles2D" parent="."]
-emitting = false
+material = SubResource("ShaderMaterial_ugkdm")
 amount = 6
 lifetime = 3.0
 lifetime_randomness = 0.32

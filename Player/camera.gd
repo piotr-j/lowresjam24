@@ -1,12 +1,8 @@
 extends Camera2D
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-	#draw_rect(Rect2(position.x, position.y, 64, 64), Color.CYAN, false)
+	var pos := get_screen_center_position()
+	var offset := Vector2(pos.x - floor(pos.x), pos.y - floor(pos.y))
+	
+	RenderingServer.global_shader_parameter_set("camera_offset", offset)
+	RenderingServer.global_shader_parameter_set("camera_position", pos)

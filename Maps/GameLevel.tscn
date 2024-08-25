@@ -1,6 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://g2ai10kkd1do"]
+[gd_scene load_steps=24 format=3 uid="uid://g2ai10kkd1do"]
 
 [ext_resource type="TileSet" uid="uid://fm5h4p83byd8" path="res://Assets/tiles.tres" id="1_4i4gq"]
+[ext_resource type="Shader" path="res://Materials/pixels.gdshader" id="1_cvauc"]
+[ext_resource type="Script" path="res://Maps/game_level.gd" id="2_aymqg"]
 [ext_resource type="PackedScene" uid="uid://ckhc8534o4tv1" path="res://Player/Player.tscn" id="2_jitvx"]
 [ext_resource type="PackedScene" uid="uid://c5rotm511andk" path="res://Player/HealthPickup.tscn" id="4_dlhno"]
 [ext_resource type="PackedScene" uid="uid://bqamwbtt7fc3b" path="res://DashWall/dash_wall_right.tscn" id="5_ni08m"]
@@ -12,15 +14,31 @@
 [ext_resource type="PackedScene" uid="uid://dl85dl5a53glf" path="res://Player/KillPickup.tscn" id="10_iv6pg"]
 [ext_resource type="LabelSettings" uid="uid://hvmituqsd26v" path="res://Assets/Fonts/FontSmallRed.tres" id="10_jpx26"]
 [ext_resource type="PackedScene" uid="uid://ci3q86mn6ivgd" path="res://Enemy/enemies.tscn" id="11_73oxj"]
+[ext_resource type="Shader" path="res://Materials/pixels_text.gdshader" id="11_addy6"]
 [ext_resource type="PackedScene" uid="uid://bkhmith0y4cn4" path="res://Player/respawn_spot.tscn" id="11_amp3h"]
 [ext_resource type="PackedScene" uid="uid://boheg8rb4hiyd" path="res://Enemy/enemy.tscn" id="11_pn6s8"]
 [ext_resource type="PackedScene" uid="uid://dkli5n2368ryo" path="res://Player/KeyPickup.tscn" id="12_vepua"]
 [ext_resource type="PackedScene" uid="uid://c48k3dap38vbs" path="res://win_area.tscn" id="16_2wv73"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3wdny"]
+shader = ExtResource("1_cvauc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h08rt"]
+shader = ExtResource("1_cvauc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ewdlt"]
+shader = ExtResource("11_addy6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_doyky"]
+shader = ExtResource("1_cvauc")
+
 [node name="GameLevel" type="Node2D"]
+material = SubResource("ShaderMaterial_3wdny")
+script = ExtResource("2_aymqg")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_h08rt")
 tile_set = ExtResource("1_4i4gq")
 rendering_quadrant_size = 8
 format = 2
@@ -284,6 +302,7 @@ position = Vector2(572, -236)
 [node name="Help" type="Node" parent="."]
 
 [node name="LabelReachTop" type="Label" parent="Help"]
+material = SubResource("ShaderMaterial_ewdlt")
 offset_left = 284.0
 offset_top = 14.0
 offset_right = 334.0
@@ -294,6 +313,7 @@ label_settings = ExtResource("10_jpx26")
 horizontal_alignment = 1
 
 [node name="LabelReachTop2" type="Label" parent="Help"]
+material = SubResource("ShaderMaterial_ewdlt")
 offset_left = 129.0
 offset_top = -10.0
 offset_right = 179.0
@@ -304,9 +324,10 @@ label_settings = ExtResource("10_jpx26")
 horizontal_alignment = 1
 
 [node name="LabelTheTop" type="Label" parent="Help"]
+material = SubResource("ShaderMaterial_ewdlt")
 offset_left = 258.0
 offset_top = -440.0
-offset_right = 308.0
+offset_right = 310.0
 offset_bottom = -410.0
 text = "YOU REACHED
 THE TOP!
@@ -315,6 +336,7 @@ label_settings = ExtResource("10_jpx26")
 horizontal_alignment = 1
 
 [node name="LabelMove" type="Label" parent="Help"]
+material = SubResource("ShaderMaterial_ewdlt")
 offset_left = -2.0
 offset_top = 18.0
 offset_right = 56.0
@@ -325,6 +347,7 @@ label_settings = ExtResource("10_jpx26")
 horizontal_alignment = 1
 
 [node name="LabelAttack" type="Label" parent="Help"]
+material = SubResource("ShaderMaterial_ewdlt")
 offset_left = 145.0
 offset_top = 25.0
 offset_right = 195.0
@@ -458,6 +481,7 @@ position = Vector2(-545, -348)
 [node name="Player" parent="." node_paths=PackedStringArray("respawn_spot") instance=ExtResource("2_jitvx")]
 z_index = 2
 position = Vector2(27, 52)
+camera_zoom = 8.0
 air_control = 0.65
 dash_speed = 6500.0
 dash_gravity_scale = 0.0
@@ -467,3 +491,15 @@ enemies_scene = ExtResource("11_73oxj")
 pickups_scene = ExtResource("6_55o1a")
 
 [node name="WinArea" parent="." instance=ExtResource("16_2wv73")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_doyky")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

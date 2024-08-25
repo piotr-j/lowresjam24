@@ -1,10 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://boheg8rb4hiyd"]
+[gd_scene load_steps=16 format=3 uid="uid://boheg8rb4hiyd"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_5l1rm"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_w4fgn"]
+[ext_resource type="Shader" path="res://Materials/pixels.gdshader" id="2_vq486"]
+[ext_resource type="Shader" path="res://Materials/pixels_particle.gdshader" id="4_utlc7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pl80j"]
 radius = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k7hsf"]
+shader = ExtResource("2_vq486")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ukoal"]
 atlas = ExtResource("1_w4fgn")
@@ -61,6 +66,9 @@ radius = 40.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gegee"]
 size = Vector2(14, 13)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ff34p"]
+shader = ExtResource("4_utlc7")
+
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_5l1rm")
@@ -70,6 +78,7 @@ shape = SubResource("CircleShape2D_pl80j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 process_mode = 3
+material = SubResource("ShaderMaterial_k7hsf")
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_2vhx8")
 animation = &"idle"
@@ -100,6 +109,7 @@ wait_time = 0.75
 
 [node name="ParticlesDeadEnemy" type="CPUParticles2D" parent="."]
 process_mode = 3
+material = SubResource("ShaderMaterial_ff34p")
 position = Vector2(0, 2)
 emitting = false
 amount = 32
@@ -113,6 +123,7 @@ color = Color(0.160784, 0.678431, 1, 1)
 
 [node name="ParticlesDamageEnemy" type="CPUParticles2D" parent="."]
 process_mode = 3
+material = SubResource("ShaderMaterial_ff34p")
 position = Vector2(0, 2)
 emitting = false
 one_shot = true

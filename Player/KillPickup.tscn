@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dl85dl5a53glf"]
+[gd_scene load_steps=6 format=3 uid="uid://dl85dl5a53glf"]
 
 [ext_resource type="Script" path="res://Player/KillPickup.gd" id="1_a87s0"]
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="2_qiqb8"]
+[ext_resource type="Material" uid="uid://cgoo50anj7fgr" path="res://Materials/pixels_mat.tres" id="2_ro7hq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tp0cl"]
 size = Vector2(8, 4)
@@ -20,6 +21,7 @@ position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_tp0cl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_ro7hq")
 texture = SubResource("AtlasTexture_ulwtb")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
