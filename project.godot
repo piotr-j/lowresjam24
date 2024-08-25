@@ -15,6 +15,10 @@ run/main_scene="res://Maps/GameLevel.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://audio_bus_layout.tres"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=2
