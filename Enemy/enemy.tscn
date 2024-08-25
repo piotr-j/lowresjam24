@@ -78,14 +78,12 @@ animation = &"idle"
 collision_mask = 3
 
 [node name="CollisionShapeInner" type="CollisionShape2D" parent="DetectionInner"]
-visible = false
 shape = SubResource("CircleShape2D_xxojx")
 
 [node name="DetectionOuter" type="Area2D" parent="."]
 collision_mask = 3
 
 [node name="CollisionShapeOuter" type="CollisionShape2D" parent="DetectionOuter"]
-visible = false
 shape = SubResource("CircleShape2D_drg3h")
 debug_color = Color(0.946025, 0.188105, 0.356576, 0.42)
 

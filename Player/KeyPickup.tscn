@@ -131,7 +131,8 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="AudioKey" type="AudioStreamPlayer2D" parent="."]
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_2fei8")
+bus = &"VFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

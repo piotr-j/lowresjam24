@@ -13,4 +13,4 @@ func _on_body_entered(body: Node2D) -> void:
 		used = true
 		body.dash_count_max += 1
 		$AnimationPlayer.play("destroy")
-		$AudioHeal.play()
+		$Audio.play()

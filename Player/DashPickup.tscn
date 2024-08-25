@@ -131,8 +131,9 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="AudioHeal" type="AudioStreamPlayer2D" parent="."]
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_fp5lx")
 pitch_scale = 2.0
+bus = &"VFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -20,7 +20,7 @@ func toggle(enabled:bool) -> void:
 	$ParticlesSmoke.emitting = enabled
 	if enabled:
 		animated_sprite_2d.play("on")
-		$AudioHeal.play()
+		$Audio.play()
 	else:
 		animated_sprite_2d.play("off")
 

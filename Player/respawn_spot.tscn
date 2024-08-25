@@ -69,9 +69,10 @@ animation = &"on"
 autoplay = "off"
 frame_progress = 0.503303
 
-[node name="AudioHeal" type="AudioStreamPlayer2D" parent="."]
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_rq4aa")
 pitch_scale = 2.0
+bus = &"VFX"
 
 [node name="ParticlesSmoke" type="CPUParticles2D" parent="."]
 emitting = false

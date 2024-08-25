@@ -1,6 +1,9 @@
 extends CharacterBody2D
 class_name PlayerCls
 
+signal aggro_gained
+signal aggro_lost
+
 enum Facing {
 	RIGHT, LEFT
 }
@@ -10,7 +13,7 @@ enum Facing {
 @onready var hp_2: HPIconCls = $CanvasLayer/ColorRect/HP2
 @onready var hp_3: HPIconCls = $CanvasLayer/ColorRect/HP3
 
-@export var speed := 60.0
+@export var speed := 3600.0
 @export var jump_speed := -160.0
 @export var attack_damage := 5
 @export var dash_damage := 8
@@ -99,6 +102,19 @@ var keys:= 0:
 		keys = max(v, 0)
 		$CanvasLayer/Key.visible = keys > 0
 
+var aggro_count := 0:
+	set(v):
+		print('set aggro ' + str(v))
+		if v == aggro_count:
+			return
+		v = max(v, 0)
+		if v > aggro_count and aggro_count == 0:
+			aggro_gained.emit()
+		if v < aggro_count and v == 0:
+			aggro_lost.emit()
+		aggro_count = v
+	
+
 func play_need_key() -> void:
 	$PlayerAnimations.play("show_key_needed")
 
@@ -134,6 +150,7 @@ func respawn() -> void:
 	player_sprite.play("idle")
 	position = respawn_spot.position - Vector2(8, 0)
 	health = health_max
+	aggro_count = 0
 	# seems to work-ish
 	var old_enemies: Node = get_tree().get_first_node_in_group("enemies")
 	if old_enemies:
@@ -162,6 +179,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
+	#print ('physics fps ' + str(1.0/delta) + ", dt " + str(delta))
 	# Add the gravity.
 	var air_control_scale := 1.0
 	if not is_on_floor():
@@ -175,7 +193,7 @@ func _physics_process(delta: float) -> void:
 		$Timers/WasOnFloorTimer.start()
 		
 	if damaged:
-		velocity.y += -50
+		velocity.y += -300 * delta
 		damaged = false
 
 	try_jump()
@@ -184,26 +202,12 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction and input_enabled:
-		velocity.x = direction * speed * air_control_scale
-		if $CanvasLayer/InfoMove.visible:
-			$PlayerAnimations.play("hide_move")
+		velocity.x = direction * speed * air_control_scale * delta
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed * air_control_scale)
+		velocity.x = move_toward(velocity.x, 0, speed * air_control_scale * delta)
 		
 	# change direction even if blocked (eg by enemy)
-	if not dashing:
-		if velocity.x > 0.1:
-			facing_direction = Facing.RIGHT
-			weapon_sprite_right.visible = true
-			weapon_sprite_left.visible = false
-			attack_cast.rotation_degrees = 0
-			$Particles/ParticlesDash.rotation_degrees = 0
-		elif velocity.x < -0.1:
-			facing_direction = Facing.LEFT
-			weapon_sprite_right.visible = false
-			weapon_sprite_left.visible = true
-			attack_cast.rotation_degrees = 180
-			$Particles/ParticlesDash.rotation_degrees = 180
+	update_facing()
 		
 	if Input.is_action_just_pressed("dash") and not dashing and dash_cooldown.time_left <= 0 and dash_count > 0 and input_enabled:
 		dash_timer.start()
@@ -257,12 +261,23 @@ func _physics_process(delta: float) -> void:
 		weapon_sprite.play("attack")
 		attack_front(attack_damage)
 		
-	#if Input.is_action_just_pressed("pause"):
-		#if Engine.time_scale > .1:
-			#Engine.time_scale = 0.01
-		#else:
-			#Engine.time_scale = 1.0
+func update_facing () -> void:
+	if dashing:
+		return
 		
+	if velocity.x > 0.1:
+		facing_direction = Facing.RIGHT
+		attack_cast.rotation_degrees = 0
+		$Particles/ParticlesDash.rotation_degrees = 0
+	elif velocity.x < -0.1:
+		facing_direction = Facing.LEFT
+		attack_cast.rotation_degrees = 180
+		$Particles/ParticlesDash.rotation_degrees = 180
+		
+	weapon_sprite_right.visible = facing_direction != Facing.LEFT
+	weapon_sprite_left.visible = facing_direction == Facing.LEFT
+	
+	
 func attack_front(damage :int) -> void:
 	attack_cast.force_shapecast_update()
 	var count := attack_cast.get_collision_count()

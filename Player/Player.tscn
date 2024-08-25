@@ -1,14 +1,19 @@
-[gd_scene load_steps=37 format=3 uid="uid://ckhc8534o4tv1"]
+[gd_scene load_steps=46 format=3 uid="uid://ckhc8534o4tv1"]
 
 [ext_resource type="Texture2D" uid="uid://ckeewqbper3fh" path="res://Assets/tilemap_packed.png" id="1_dvinv"]
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_t0s6d"]
+[ext_resource type="Script" path="res://Player/camera.gd" id="2_71uuk"]
 [ext_resource type="PackedScene" uid="uid://b83k0apr5wj8h" path="res://Player/HPIcon.tscn" id="3_x3xnu"]
 [ext_resource type="LabelSettings" uid="uid://hvmituqsd26v" path="res://Assets/Fonts/FontSmallRed.tres" id="4_vlji1"]
 [ext_resource type="AudioStream" uid="uid://bi0xu8yeqwfr3" path="res://Assets/Sounds/dash.wav" id="5_2fkht"]
+[ext_resource type="Script" path="res://Player/player_music.gd" id="5_56bki"]
 [ext_resource type="AudioStream" uid="uid://ckm60r8128x4d" path="res://Assets/Sounds/jump.wav" id="6_tm2j2"]
 [ext_resource type="AudioStream" uid="uid://csdfnlou6tanf" path="res://Assets/Sounds/attack3.wav" id="7_nw00y"]
 [ext_resource type="AudioStream" uid="uid://8vkexfgjngx7" path="res://Assets/Sounds/death.wav" id="8_qb4gq"]
 [ext_resource type="AudioStream" uid="uid://mnhc8j22k6ac" path="res://Assets/Sounds/damage.wav" id="10_n4fi6"]
+[ext_resource type="AudioStream" uid="uid://cg4k1ypixfhhg" path="res://Assets/Music/adventure_quest.mp3" id="12_okndm"]
+[ext_resource type="AudioStream" uid="uid://c5f5qomnhwoda" path="res://Assets/Music/outro_song.mp3" id="13_dx4ps"]
+[ext_resource type="AudioStream" uid="uid://b52t73kathqeo" path="res://Assets/Music/battle_song.mp3" id="14_ip41g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_02o54"]
 radius = 3.0
@@ -414,6 +419,169 @@ _data = {
 "show_key_needed": SubResource("Animation_ckapr")
 }
 
+[sub_resource type="Animation" id="Animation_11fma"]
+resource_name = "play_aggro_music"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioMusic:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.46229, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioMusicCombat:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.116629, 1),
+"update": 0,
+"values": [-80.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioMusic:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioMusicCombat")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [1.5],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_gogh4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioMusic:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioMusicCombat:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioMusicCombat:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioMusic:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_vr2sr"]
+resource_name = "play_base_music"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioMusic:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.153893, 1),
+"update": 0,
+"values": [-80.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioMusicCombat:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(2.2974, 0.466516),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioMusicCombat:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(-0.0333333, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioMusic:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5wqvh"]
+_data = {
+"RESET": SubResource("Animation_gogh4"),
+"play_aggro_music": SubResource("Animation_11fma"),
+"play_base_music": SubResource("Animation_vr2sr")
+}
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
@@ -424,16 +592,40 @@ script = ExtResource("1_t0s6d")
 shape = SubResource("CircleShape2D_02o54")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 position = Vector2(0, -8)
 position_smoothing_speed = 8.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-drag_left_margin = 0.13
-drag_top_margin = 0.26
-drag_right_margin = 0.13
-drag_bottom_margin = 0.13
+drag_left_margin = 0.04
+drag_top_margin = 0.07
+drag_right_margin = 0.04
+drag_bottom_margin = 0.04
 editor_draw_drag_margin = true
+script = ExtResource("2_71uuk")
+
+[node name="Line2D" type="Line2D" parent="Camera2D"]
+position = Vector2(-32, -32)
+points = PackedVector2Array(0, 0, 64, 0)
+width = 1.0
+default_color = Color(0, 1, 1, 1)
+
+[node name="Line2D2" type="Line2D" parent="Camera2D"]
+position = Vector2(-32, 32)
+points = PackedVector2Array(0, 0, 64, 0)
+width = 1.0
+default_color = Color(0, 1, 1, 1)
+
+[node name="Line2D3" type="Line2D" parent="Camera2D"]
+position = Vector2(-32, -32)
+points = PackedVector2Array(0, 0, 0, 64)
+width = 1.0
+default_color = Color(0, 1, 1, 1)
+
+[node name="Line2D4" type="Line2D" parent="Camera2D"]
+position = Vector2(32, -32)
+points = PackedVector2Array(0, 0, 0, 64)
+width = 1.0
+default_color = Color(0, 1, 1, 1)
 
 [node name="PlayerSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
@@ -600,41 +792,67 @@ one_shot = true
 wait_time = 0.125
 one_shot = true
 
-[node name="Audio" type="Node2D" parent="."]
+[node name="Audio" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("5_56bki")
+player = NodePath("..")
 
 [node name="AudioDash" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("5_2fkht")
 volume_db = -7.1
 pitch_scale = 2.0
+bus = &"VFX"
 
 [node name="AudioJump" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("6_tm2j2")
 pitch_scale = 1.33
+bus = &"VFX"
 
 [node name="AudioJump2" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("6_tm2j2")
 volume_db = 5.707
 pitch_scale = 1.65
+bus = &"VFX"
 
 [node name="AudioAttack" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("7_nw00y")
 volume_db = 15.0
 pitch_scale = 1.7
+bus = &"VFX"
 
 [node name="AudioDeath" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("8_qb4gq")
 volume_db = -7.1
 pitch_scale = 2.0
+bus = &"VFX"
 
 [node name="AudioDamage" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("10_n4fi6")
 volume_db = 5.657
 pitch_scale = 0.63
+bus = &"VFX"
 
 [node name="AudioMusic" type="AudioStreamPlayer2D" parent="Audio"]
-stream = ExtResource("5_2fkht")
-volume_db = -7.1
-pitch_scale = 2.0
+stream = ExtResource("12_okndm")
+bus = &"MUSIC"
+playback_type = 1
+parameters/looping = true
+
+[node name="AudioMusicEnd" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("13_dx4ps")
+bus = &"MUSIC"
+playback_type = 1
+parameters/looping = true
+
+[node name="AudioMusicCombat" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("14_ip41g")
+bus = &"MUSIC"
+playback_type = 1
+parameters/looping = true
+
+[node name="MusicPlayer" type="AnimationPlayer" parent="Audio"]
+libraries = {
+"": SubResource("AnimationLibrary_5wqvh")
+}
 
 [node name="Particles" type="Node2D" parent="."]
 

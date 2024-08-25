@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name EnemyCls
 
-@export var speed := 2
+@export var speed := 3000
 @export var jump_speed := -120.0
 @export var attack_damage := 2
 @export var can_be_interrupted := true
@@ -46,6 +46,8 @@ func damage(damage: int) -> void:
 func die () -> void:
 	if dead:
 		return
+	if player:
+		player.aggro_count -= 1
 	#print('die' + str(self))
 	player = null
 	# todo some animation/particles etc!
@@ -89,17 +91,22 @@ func _physics_process(delta: float) -> void:
 	if player and can_jump_randomly and is_on_floor() and randf() < jump_chance:
 		velocity.y = jump_speed
 
+	# TODO direction based!
 	if damaged:
-		velocity.y += -50
+		velocity.y += -300 * delta
 		damaged = false
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	
-	if health >= 0 and player:
-		var direction := player.position - position
+	if health >= 0:
+		# go back to start by default
+		var direction := start_pos - position
+		if player:
+			direction = player.position - position
+			
 		# dont hug the player?
 		if direction and direction.length() >= 8.5:
-			velocity.x = direction.x * speed
+			velocity.x = direction.normalized().x * speed * delta
 			$AnimatedSprite2D.play("move")
 			if velocity.x < 0:
 				$AnimatedSprite2D.flip_h = true
@@ -107,6 +114,10 @@ func _physics_process(delta: float) -> void:
 				$AnimatedSprite2D.flip_h = false
 		else:
 			velocity.x = 0
+			if not player:
+				$AnimatedSprite2D.play("idle")
+	else:
+		velocity.x = 0
 
 	move_and_slide()
 
@@ -115,6 +126,8 @@ func _on_detection_inner_body_entered(body: Node2D) -> void:
 		return
 	if not body is PlayerCls:
 		return
+	if not player:
+		body.aggro_count += 1
 	player = body
 	#print('Player entered! ' + str(self))
 
@@ -124,7 +137,10 @@ func _on_detection_outer_body_exited(body: Node2D) -> void:
 		return
 	if not body is PlayerCls:
 		return
+	if player:
+		player.aggro_count -= 1
 	player = null
+	$AnimatedSprite2D.play("idle")
 	#print('Player left! ' + str(self))
 
 
